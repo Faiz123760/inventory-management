@@ -6,16 +6,40 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Badge } from "@/components/ui/badge";
 import {
   AlertTriangle,
-  Bell,
   Clock,
   ArrowRight,
   ShieldAlert,
   Info,
   CheckCircle2
 } from "lucide-react";
-import { lowStockItems } from "@/lib/snack-mock-data";
+import { useAppStore } from "@/lib/store";
+import { useMemo, useState } from "react";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function AlertsPage() {
+  const { state, updateMaterial } = useAppStore();
+  const { toast } = useToast();
+  const [acknowledged, setAcknowledged] = useState<string[]>([]);
+
+  const lowStockItems = useMemo(() => state.materials
+    .filter((m) => m.current_stock < 50)
+    .map((m) => ({
+      materialId: m.material_id,
+      name: m.name,
+      current: `${m.current_stock} ${m.unit}`,
+      min: `50 ${m.unit}`,
+      status: m.current_stock < 20 ? "Critical" : "Low",
+    })), [state.materials]);
+
+  const visibleItems = lowStockItems.filter((item) => !acknowledged.includes(item.materialId));
+
+  const handleRestock = (materialId: string) => {
+    const material = state.materials.find((m) => m.material_id === materialId);
+    if (!material) return;
+    updateMaterial({ ...material, current_stock: material.current_stock + 100 });
+    toast({ title: "Restock queued", description: `${material.name} +100 ${material.unit} added to stock.` });
+  };
+
   return (
     <div className="flex flex-1 flex-col bg-background animate-in-fade">
       <PageHeader
@@ -26,11 +50,11 @@ export default function AlertsPage() {
       <main className="flex-1 space-y-6 p-4 md:p-8">
         <div className="flex flex-wrap items-center justify-between gap-4 animate-in-slide-up">
           <div>
-            <h2 className="text-3xl font-bold tracking-tight text-slate-500">Notifications Center</h2>
-            <p className="text-slate-500 font-medium">Stay informed about low stock, expiring batches, and system events.</p>
+            <h2 className="text-2xl font-bold tracking-tight text-slate-900">Notifications Center</h2>
+            <p className="text-slate-500 text-sm">Stay informed about low stock, expiring batches, and system events.</p>
           </div>
           <div className="flex items-center gap-3">
-            <Button variant="outline" className="bg-white border-slate-200 text-slate-500 h-10 px-4 font-semibold hover:bg-slate-50">
+            <Button variant="outline" className="bg-white border-slate-200 text-slate-500 h-10 px-4 font-semibold hover:bg-slate-50" onClick={() => setAcknowledged(lowStockItems.map((i) => i.materialId))}>
               <CheckCircle2 className="mr-2 h-4 w-4 text-primary" /> Mark All Read
             </Button>
           </div>
@@ -42,10 +66,10 @@ export default function AlertsPage() {
               <AlertTriangle className="h-4 w-4 text-primary" />
               Active Stock Alerts
             </h3>
-            {lowStockItems.map((item, i) => (
-              <Card key={i} className="bg-white border-slate-200 shadow-sm overflow-hidden group hover:border-primary/30 transition-all">
+            {visibleItems.map((item) => (
+              <Card key={item.materialId} className="bg-white border-slate-200 shadow-sm overflow-hidden group hover:border-primary/30 transition-all">
                 <div className="flex">
-                  <div className={`w-1.5 ${item.status === 'Critical' ? 'bg-rose-500' : 'bg-amber-500'}`} />
+                  <div  />
                   <CardContent className="flex-1 p-5">
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex gap-4">
@@ -61,7 +85,7 @@ export default function AlertsPage() {
                           </div>
                         </div>
                       </div>
-                      <Button size="sm" className="bg-primary hover:bg-primary/90 text-white font-bold h-9 px-4 rounded-lg">
+                      <Button size="sm" className="bg-primary hover:bg-primary/90 text-white font-bold h-9 px-4 rounded-lg" onClick={() => handleRestock(item.materialId)}>
                         Restock
                       </Button>
                     </div>
@@ -69,6 +93,11 @@ export default function AlertsPage() {
                 </div>
               </Card>
             ))}
+            {visibleItems.length === 0 ? (
+              <Card className="bg-white border-slate-200 shadow-sm">
+                <CardContent className="p-8 text-center text-slate-500">No active alerts right now.</CardContent>
+              </Card>
+            ) : null}
           </div>
 
           <div className="space-y-6">
@@ -97,23 +126,7 @@ export default function AlertsPage() {
               </CardContent>
             </Card>
 
-            <Card className="bg-slate-900 border-slate-800 text-white shadow-xl">
-              <CardHeader>
-                <CardTitle className="text-base flex items-center gap-2 font-bold">
-                  <ShieldAlert className="h-4 w-4 text-blue-400" />
-                  Security Alerts
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex gap-3">
-                  <Info className="h-4 w-4 text-blue-400 shrink-0" />
-                  <p className="text-xs text-slate-300 leading-relaxed font-medium">
-                    System login detected from a new IP address in Mumbai, India.
-                    <span className="block mt-2 text-primary font-bold cursor-pointer hover:underline flex items-center gap-1">Verify device <ArrowRight className="h-3 w-3" /></span>
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
+            
           </div>
         </div>
       </main>

@@ -1,11 +1,21 @@
 "use client";
 
 import * as React from "react";
-import { Command, Factory, LayoutDashboard, ShoppingCart, Users, UserCheck, Package, Tags, Box, Settings, BarChart3, Bell, LogOut as LogOutIcon } from "lucide-react";
+import {
+  LayoutDashboard,
+  Package,
+  Factory,
+  ShoppingCart,
+  Users,
+  User,
+  History,
+  Settings2,
+  Bell,
+  ChevronsUpDown,
+  
+  ClipboardList,
+} from "lucide-react";
 
-import { NavMain } from "@/components/nav-main";
-import { NavSecondary } from "@/components/nav-secondary";
-import { NavUser } from "@/components/nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -14,94 +24,152 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarGroup,
+  SidebarGroupContent,
+  useSidebar,
 } from "@/components/ui/sidebar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { NavMain } from "@/components/nav-main";
 
-const navigationItems = [
-  {
-    title: "Dashboard",
-    url: "/dashboard",
-    icon: LayoutDashboard,
+const data = {
+  user: {
+    name: "Admin User",
+    email: "admin@powerpixel.com",
+    avatar: "/avatars/admin.png",
   },
-  {
-    title: "Raw Materials",
-    url: "/raw-materials",
-    icon: Factory,
-  },
-  {
-    title: "Products",
-    url: "/products",
-    icon: Package,
-  },
+  navMain: [
+    { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
+    { title: "Products", url: "/products", icon: Package },
+    { title: "Raw Materials", url: "/raw-materials", icon: Factory },
+    { title: "Bill of Materials", url: "/bom", icon: ClipboardList },
+  ],
+  sales: [
+    { title: "Orders", url: "/orders", icon: ShoppingCart },
+    { title: "Purchase History", url: "/purchases", icon: History },
 
-  {
-    title: "Suppliers",
-    url: "/suppliers",
-    icon: Users,
-  },
-  {
-    title: "Customers",
-    url: "/customers",
-    icon: UserCheck,
-  },
-  {
-    title: "Purchases",
-    url: "/purchases",
-    icon: ShoppingCart,
-  },
-  {
-    title: "Orders",
-    url: "/orders",
-    icon: Tags,
-  },
-  {
-    title: "Reports",
-    url: "/reports",
-    icon: BarChart3,
-  },
-  {
-    title: "Alerts",
-    url: "/alerts",
-    icon: Bell,
-  },
-  {
-    title: "Settings",
-    url: "/settings",
-    icon: Settings,
-  },
-  {
-    title: "Logout",
-    url: "/logout",
-    icon: LogOutIcon,
-  },
-];
+    { title: "Customers", url: "/customers", icon: User },
+    { title: "Suppliers", url: "/suppliers", icon: Users },
+  ],
+  system: [
+    { title: "Notifications", url: "/alerts", icon: Bell },
+    { title: "Settings", url: "/settings", icon: Settings2 },
+  ],
+};
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { state } = useSidebar();
+  // const [activeWorkspace, setActiveWorkspace] = React.useState(data.workspaces[0]);
+
   return (
-    <Sidebar variant="inset" className="border-r border-sidebar-border bg-sidebar" {...props}>
-      <SidebarHeader className="p-4 bg-sidebar">
+    <Sidebar
+      variant="inset"
+      collapsible="icon"
+      className="border-r-0"
+      {...props}
+    >
+      <SidebarHeader className="p-4 border-b border-white/5">
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" asChild className="hover:bg-transparent p-0">
-              <a href="/dashboard" className="flex items-center gap-3">
-                <div className="bg-[#1a9df9] text-white flex aspect-square size-10 items-center justify-center rounded-lg shadow-sm">
-                  <Box className="size-6" />
-                </div>
-                <div className="flex flex-col text-left leading-none">
-                  <span className="text-lg font-bold tracking-tight text-white">
-                    Inventory<span className="text-[#1a9df9]">Pro</span>
-                  </span>
-                  <span className="text-[10px] text-sidebar-foreground font-medium uppercase tracking-wider mt-0.5">Zylkar Apparels</span>
-                </div>
-              </a>
-            </SidebarMenuButton>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <SidebarMenuButton
+                  size="lg"
+                  className="data-[state=open]:bg-white/5 data-[state=open]:text-white hover:bg-white/5 hover:text-white transition-colors"
+                >
+                  <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+                    <Avatar className="h-8 w-8 rounded-lg">
+                      <AvatarImage src={data.user.avatar} alt={data.user.name} />
+                      <AvatarFallback className="rounded-lg bg-primary text-white font-bold">
+                        AD
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="grid flex-1 text-left text-sm leading-tight">
+                      <span className="truncate font-semibold">{data.user.name}</span>
+                      <span className="truncate text-xs text-slate-500">{data.user.email}</span>
+                    </div>
+                  </div>
+                </SidebarMenuButton>
+              </DropdownMenuTrigger>
+
+            </DropdownMenu>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
-      <SidebarContent className="px-2 bg-sidebar">
-        <NavMain items={navigationItems} />
+
+      <SidebarContent className="gap-0 py-2">
+        <SidebarGroup>
+          <SidebarGroupContent>
+            <NavMain items={[...data.navMain, ...data.sales, ...data.system]} />
+          </SidebarGroupContent>
+        </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter className="p-4 border-t border-sidebar-border bg-sidebar">
-        <NavUser />
+
+      {/* ── User Footer ── */}
+      <SidebarFooter className="p-4 border-t border-white/5">
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <SidebarMenuButton
+                  size="lg"
+                  className="data-[state=open]:bg-white/5 data-[state=open]:text-white hover:bg-white/5 hover:text-white transition-colors"
+                >
+                  <Avatar className="h-8 w-8 rounded-lg">
+                    <AvatarImage src={data.user.avatar} alt={data.user.name} />
+                    <AvatarFallback className="rounded-lg bg-primary text-white font-bold">
+                      AD
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
+                    <span className="truncate font-semibold text-slate-200">
+                      {data.user.name}
+                    </span>
+                    <span className="truncate text-xs text-slate-500">
+                      {data.user.email}
+                    </span>
+                  </div>
+                  <ChevronsUpDown className="ml-auto size-4 text-slate-500 group-data-[collapsible=icon]:hidden" />
+                </SidebarMenuButton>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg bg-sidebar border-white/10 text-slate-200"
+                side={state === "collapsed" ? "right" : "bottom"}
+                align="end"
+                sideOffset={4}
+              >
+                <DropdownMenuLabel className="p-0 font-normal">
+                  <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+                    <Avatar className="h-8 w-8 rounded-lg">
+                      <AvatarImage src={data.user.avatar} alt={data.user.name} />
+                      <AvatarFallback className="rounded-lg bg-blue-600 text-white font-bold">
+                        AD
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="grid flex-1 text-left text-sm leading-tight">
+                      <span className="truncate font-semibold">{data.user.name}</span>
+                      <span className="truncate text-xs text-slate-500">{data.user.email}</span>
+                    </div>
+                  </div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator className="bg-white/10" />
+                <DropdownMenuItem className="hover:bg-white/5 cursor-pointer">Account Settings</DropdownMenuItem>
+                <DropdownMenuItem className="hover:bg-white/5 cursor-pointer">Billing</DropdownMenuItem>
+                <DropdownMenuSeparator className="bg-white/10" />
+                <DropdownMenuItem className="text-red-400 hover:bg-red-500/10 cursor-pointer">
+                  Log out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </SidebarMenuItem>
+        </SidebarMenu>
       </SidebarFooter>
     </Sidebar>
   );

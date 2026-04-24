@@ -1,5 +1,6 @@
 import SidebarLayout from "@/components/sidebar-layout";
 import { Toaster } from "@/components/ui/toaster";
+import { AppProvider } from "@/lib/store";
 import "./globals.css";
 
 export default function RootLayout({
@@ -10,8 +11,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <SidebarLayout>{children}</SidebarLayout>
-        <Toaster />
+        <AppProvider>
+          <SidebarLayout>{children}</SidebarLayout>
+          <Toaster />
+        </AppProvider>
       </body>
     </html>
   );

@@ -4,131 +4,117 @@ import { PageHeader } from "@/components/page-header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import {
-  Download,
-  TrendingUp,
-  BarChart3,
-  PieChart as PieChartIcon,
-  Calendar,
-  FileSpreadsheet,
-  FileText,
-  MousePointer2
+  Download, TrendingUp, BarChart3, Calendar, FileSpreadsheet, FileText,
+  ArrowUpRight, IndianRupee, Package,
 } from "lucide-react";
 import {
-  Area,
-  AreaChart,
-  Bar,
-  BarChart,
-  CartesianGrid,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
+  Area, AreaChart, Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis,
 } from "recharts";
 import { stockTrendsData } from "@/lib/snack-mock-data";
+
+const revenueData = [
+  { month: "Nov", revenue: 42000 },
+  { month: "Dec", revenue: 58000 },
+  { month: "Jan", revenue: 51000 },
+  { month: "Feb", revenue: 67000 },
+  { month: "Mar", revenue: 73000 },
+  { month: "Apr", revenue: 84200 },
+];
 
 export default function ReportsPage() {
   return (
     <div className="flex flex-1 flex-col bg-background animate-in-fade">
-      <PageHeader
-        title="Business Reports"
-        breadcrumbs={[{ title: "Analysis" }, { title: "Reports" }]}
-      />
+      <PageHeader title="Reports" breadcrumbs={[{ title: "Analytics" }, { title: "Reports" }]} />
 
-      <main className="flex-1 space-y-6 p-4 md:p-8">
-        <div className="flex flex-wrap items-center justify-between gap-4 animate-in-slide-up">
+      <main className="flex-1 p-4 md:p-6 space-y-5">
+        {/* ── Header ── */}
+        <div className="page-section-header animate-in-slide-up">
           <div>
-            <h2 className="text-3xl font-bold tracking-tight text-slate-500">Analytics & Insights</h2>
-            <p className="text-slate-500 font-medium">Comprehensive overview of your supply chain and order performance.</p>
+            <h1 className="page-title">Analytics & Insights</h1>
+            <p className="page-subtitle">Comprehensive overview of supply chain and order performance.</p>
           </div>
-          <div className="flex items-center gap-3">
-            <Button variant="outline">
-              <Calendar className="mr-2 h-4 w-4 text-primary" /> This Year
+          <div className="flex items-center gap-2">
+            <Button variant="outline" size="sm" className="h-9 gap-1.5 border-slate-200 text-slate-600 hover:bg-slate-50 rounded-md">
+              <Calendar className="h-3.5 w-3.5 text-primary" /> This Year
             </Button>
-            <Button>
-              <Download className="mr-2 h-4 w-4" /> Full Report
+            <Button size="sm" className="h-9 gap-1.5 bg-primary hover:bg-primary/90 text-white rounded-md shadow-sm shadow-primary/20">
+              <Download className="h-3.5 w-3.5" /> Full Report
             </Button>
           </div>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 animate-in-slide-up [animation-delay:100ms]">
-          <Card className="bg-white border-slate-200 shadow-sm overflow-hidden">
-            <CardHeader className="flex flex-row items-center justify-between pb-7 border-b border-slate-50">
-              <div>
-                <CardTitle className="text-lg font-bold flex items-center gap-2 text-slate-900">
-                  <BarChart3 className="h-5 w-5 text-primary" />
-                  Monthly Stock Inflow
-                </CardTitle>
-                <CardDescription className="text-slate-500 font-medium">Comparison of material acquisition</CardDescription>
-              </div>
-              <Button variant="ghost" size="icon">
-                <MousePointer2 className="h-4 w-4" />
-              </Button>
-            </CardHeader>
-            <CardContent className="pt-6">
-              <div className="h-[300px] w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={stockTrendsData}>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
-                    <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: "#64748b", fontSize: 12, fontWeight: 500 }} />
-                    <YAxis axisLine={false} tickLine={false} tick={{ fill: "#64748b", fontSize: 12, fontWeight: 500 }} />
-                    <Tooltip cursor={{ fill: '#f1f5f9' }} contentStyle={{ backgroundColor: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 4px 12px rgba(0,0,0,0.05)', color: '#1e293b' }} />
-                    <Bar dataKey="raw" fill="#3B82F6" radius={[4, 4, 0, 0]} />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-            </CardContent>
-          </Card>
+        {/* ── KPIs ── */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 animate-in-slide-up [animation-delay:50ms]">
+          <div className="stat-card"><div className="stat-icon bg-blue-50"><IndianRupee className="h-5 w-5 text-primary" /></div><div><p className="stat-label">Total Revenue</p><p className="stat-value text-xl">₹5.4L</p><p className="stat-change-up">+22% YoY</p></div></div>
+          <div className="stat-card"><div className="stat-icon bg-emerald-50"><TrendingUp className="h-5 w-5 text-emerald-600" /></div><div><p className="stat-label">Monthly Growth</p><p className="stat-value text-xl">18%</p><p className="stat-change-up">+6% vs last mo.</p></div></div>
+          <div className="stat-card"><div className="stat-icon bg-orange-50"><Package className="h-5 w-5 text-orange-500" /></div><div><p className="stat-label">Units Sold</p><p className="stat-value text-xl">12.8K</p><p className="stat-change-up">+5% this week</p></div></div>
+          <div className="stat-card"><div className="stat-icon bg-violet-50"><BarChart3 className="h-5 w-5 text-violet-600" /></div><div><p className="stat-label">Avg. Order Value</p><p className="stat-value text-xl">₹2,840</p><p className="stat-change-up">+9% this month</p></div></div>
+        </div>
 
-          <Card className="bg-white border-slate-200 shadow-sm overflow-hidden">
-            <CardHeader className="flex flex-row items-center justify-between pb-7 border-b border-slate-50">
+        {/* ── Charts ── */}
+        <div className="grid gap-4 md:grid-cols-2 animate-in-slide-up [animation-delay:100ms]">
+          {/* Monthly Revenue */}
+          <Card className="surface">
+            <CardHeader className="surface-header flex-row items-center justify-between space-y-0">
               <div>
-                <CardTitle className="text-lg font-bold flex items-center gap-2 text-slate-900">
-                  <TrendingUp className="h-5 w-5 text-emerald-500" />
-                  Revenue Growth
+                <CardTitle className="text-[14px] font-semibold text-slate-900 flex items-center gap-2">
+                  <TrendingUp className="h-4 w-4 text-emerald-500" /> Revenue Growth
                 </CardTitle>
-                <CardDescription className="text-slate-500 font-medium">Order performance over time</CardDescription>
+                <CardDescription className="text-[12px] text-slate-400 mt-0.5">Month-over-month order performance</CardDescription>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <ArrowUpRight className="h-3.5 w-3.5 text-emerald-500" />
+                <span className="text-[11px] font-bold text-emerald-700">+22%</span>
               </div>
             </CardHeader>
-            <CardContent className="pt-6">
-              <div className="h-[300px] w-full">
+            <CardContent className="px-6 pb-6 pt-4">
+              <div className="h-[240px]">
                 <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={stockTrendsData}>
+                  <AreaChart data={revenueData} margin={{ top: 4, right: 4, left: -20, bottom: 0 }}>
                     <defs>
-                      <linearGradient id="colorRev" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#10b981" stopOpacity={0.2} />
-                        <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
+                      <linearGradient id="gRev" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#10b981" stopOpacity={0.15} />
+                        <stop offset="100%" stopColor="#10b981" stopOpacity={0} />
                       </linearGradient>
                     </defs>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
-                    <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: "#64748b", fontSize: 12, fontWeight: 500 }} />
-                    <YAxis axisLine={false} tickLine={false} tick={{ fill: "#64748b", fontSize: 12, fontWeight: 500 }} />
-                    <Tooltip contentStyle={{ backgroundColor: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 4px 12px rgba(0,0,0,0.05)', color: '#1e293b' }} />
-                    <Area type="monotone" dataKey="finished" stroke="#10b981" strokeWidth={3} fillOpacity={1} fill="url(#colorRev)" />
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                    <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fill: "#94a3b8", fontSize: 11, fontWeight: 500 }} dy={8} />
+                    <YAxis axisLine={false} tickLine={false} tick={{ fill: "#94a3b8", fontSize: 11, fontWeight: 500 }} />
+                    <Tooltip contentStyle={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: "8px", boxShadow: "0 8px 20px -4px rgba(0,0,0,0.08)", fontSize: 12 }} itemStyle={{ color: "#10b981" }} labelStyle={{ color: "#64748b", marginBottom: 4 }} />
+                    <Area type="monotone" dataKey="revenue" stroke="#10b981" strokeWidth={2.5} fill="url(#gRev)" dot={false} activeDot={{ r: 4, fill: "#10b981", strokeWidth: 0 }} />
                   </AreaChart>
                 </ResponsiveContainer>
               </div>
             </CardContent>
           </Card>
+
+          {/* Stock Inflow */}
+          <Card className="surface">
+            <CardHeader className="surface-header flex-row items-center justify-between space-y-0">
+              <div>
+                <CardTitle className="text-[14px] font-semibold text-slate-900 flex items-center gap-2">
+                  <BarChart3 className="h-4 w-4 text-primary" /> Monthly Stock Inflow
+                </CardTitle>
+                <CardDescription className="text-[12px] text-slate-400 mt-0.5">Material acquisition volume per week</CardDescription>
+              </div>
+            </CardHeader>
+            <CardContent className="px-6 pb-6 pt-4">
+              <div className="h-[240px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={stockTrendsData} margin={{ top: 4, right: 4, left: -20, bottom: 0 }} barSize={24}>
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                    <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: "#94a3b8", fontSize: 11, fontWeight: 500 }} dy={8} />
+                    <YAxis axisLine={false} tickLine={false} tick={{ fill: "#94a3b8", fontSize: 11, fontWeight: 500 }} />
+                    <Tooltip contentStyle={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: "8px", boxShadow: "0 8px 20px -4px rgba(0,0,0,0.08)", fontSize: 12 }} cursor={{ fill: "rgba(26,157,249,0.04)" }} itemStyle={{ color: "#1a9df9" }} />
+                    <Bar dataKey="raw" name="Raw Materials" fill="#1a9df9" radius={[4, 4, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
-        <div className="bg-primary rounded-2xl p-8 text-white relative overflow-hidden  animate-in-slide-up [animation-delay:200ms]">
-          <div className="relative z-10">
-            <h3 className="text-2xl font-bold mb-2">Available Downloads</h3>
-            <p className="text-blue-50 text-sm mb-8 max-w-md font-medium">Your data is processed daily at 12:00 AM.
-              Download standardized formats for auditing and accounting.</p>
-            <div className="flex flex-wrap gap-4">
-              <Button variant="secondary" className="bg-white/10 hover:bg-white/20 text-white border-white/20 h-11 px-6 font-bold rounded-xl backdrop-blur-sm">
-                <FileSpreadsheet className="mr-2 h-4 w-4" /> Excel Inventory
-              </Button>
-              <Button variant="secondary" className="bg-white/10 hover:bg-white/20 text-white border-white/20 h-11 px-6 font-bold rounded-xl backdrop-blur-sm">
-                <FileText className="mr-2 h-4 w-4" /> PDF Financial Summary
-              </Button>
-            </div>
-          </div>
-          <div className="absolute top-0 right-0 p-12 opacity-10 pointer-events-none">
-            <BarChart3 className="h-48 w-48" />
-          </div>
-        </div>
+       
       </main>
     </div>
   );

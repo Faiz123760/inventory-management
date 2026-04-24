@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { useMemo, useState } from 'react'
+import { useMemo, useState } from "react";
 import {
   Table,
   TableBody,
@@ -8,24 +8,27 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table'
-import { Input } from '@/components/ui/input'
-import { Search, Warehouse } from 'lucide-react'
-import { mockInventory } from '@/lib/mock-data'
+} from "@/components/ui/table";
+import { Input } from "@/components/ui/input";
+import { Search, Warehouse, Save } from "lucide-react";
+import { useAppStore } from "@/lib/store";
+import { Button } from "@/components/ui/button";
 
 export function InventoryTable() {
-  const [searchTerm, setSearchTerm] = useState('')
+  const { state, updateProduct } = useAppStore();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [draftQty, setDraftQty] = useState<Record<string, string>>({});
 
   const filteredInventory = useMemo(
     () =>
-      mockInventory.filter((item) =>
-        [item.sweet?.name, item.sweet?.slug]
-          .join(' ')
+      state.products.filter((item) =>
+        [item.name, item.product_id]
+          .join(" ")
           .toLowerCase()
           .includes(searchTerm.toLowerCase())
       ),
-    [searchTerm]
-  )
+    [state.products, searchTerm]
+  );
 
   return (
     <div className="space-y-4">
@@ -47,23 +50,55 @@ export function InventoryTable() {
           <TableHeader>
             <TableRow>
               <TableHead>Product</TableHead>
-              <TableHead>Quantity</TableHead>
-              <TableHead>Low Stock Threshold</TableHead>
+              <TableHead>Category</TableHead>
+              <TableHead>Unit</TableHead>
+              <TableHead>Current Stock</TableHead>
+              <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {filteredInventory.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={3} className="text-center py-8">
-                  {searchTerm ? 'No inventory found matching your search.' : 'No inventory available.'}
+                <TableCell colSpan={5} className="text-center py-8">
+                  {searchTerm ? "No inventory found matching your search." : "No inventory available."}
                 </TableCell>
               </TableRow>
             ) : (
               filteredInventory.map((item) => (
-                <TableRow key={item._id}>
-                  <TableCell className="font-medium">{item.sweet?.name || 'Unknown'}</TableCell>
-                  <TableCell>{item.quantity}</TableCell>
-                  <TableCell>{item.lowStockThreshold}</TableCell>
+                <TableRow key={item.product_id}>
+                  <TableCell className="font-medium">{item.name}</TableCell>
+                  <TableCell className="capitalize">{item.category}</TableCell>
+                  <TableCell>{item.unit}</TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-2 max-w-45">
+                      <Input
+                        type="number"
+                        value={draftQty[item.product_id] ?? String(item.stock_quantity)}
+                        onChange={(e) =>
+                          setDraftQty((prev) => ({
+                            ...prev,
+                            [item.product_id]: e.target.value,
+                          }))
+                        }
+                        className="h-8"
+                      />
+                    </div>
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <Button
+                      size="sm"
+                      onClick={() => {
+                        const value = Number(draftQty[item.product_id] ?? item.stock_quantity);
+                        updateProduct({
+                          ...item,
+                          stock_quantity: Number.isNaN(value) ? item.stock_quantity : value,
+                          status: value <= 0 ? "Out of Stock" : value <= 20 ? "Low Stock" : "In Stock",
+                        });
+                      }}
+                    >
+                      <Save className="h-4 w-4 mr-1" /> Save
+                    </Button>
+                  </TableCell>
                 </TableRow>
               ))
             )}
@@ -71,5 +106,5 @@ export function InventoryTable() {
         </Table>
       </div>
     </div>
-  )
+  );
 }

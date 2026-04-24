@@ -16,6 +16,7 @@ export interface Product {
   stock_quantity: number;
   status: string;
   image: string;
+  recipe?: Array<{ material_id: string; quantity: number }>;
 }
 
 export interface StockLog {
@@ -219,9 +220,82 @@ export const customers: Customer[] = [
 
 ];
 
-export const ordersHistory = [
-  { id: "SL001", date: "2026-04-22", product: "Bhujia Sev", quantity: "150 units", revenue: "₹ 3,000", payment: "UIP", status: "Completed" },
-  { id: "SL002", date: "2026-04-22", product: "Potato Chips Classic Salted", quantity: "80 units", revenue: "₹ 2,000", payment: "Cash", status: "Completed" },
-  { id: "SL003", date: "2026-04-21", product: "Tomato Tango Chips", quantity: "120 units", revenue: "₹ 3,000", payment: "Card", status: "Completed" },
-  { id: "SL004", date: "2026-04-21", product: "Banana Chips Spicy", quantity: "200 units", revenue: "₹ 6,000", payment: "UIP", status: "Completed" },
+
+export interface OrderItem {
+  productId: string;
+  productName: string;
+  quantity: number;
+  unitPrice: number;
+  totalPrice: number;
+}
+
+export interface Order {
+  id: string;
+  orderNumber: string;
+  orderDate: string;
+  customerName: string;
+  customerPhone: string;
+  items: OrderItem[];
+  subtotal: number;
+  tax: number;
+  discount: number;
+  totalAmount: number;
+  paymentStatus: 'Paid' | 'Unpaid' | 'Partial' | 'Pending';
+  paymentMethod: 'UPI' | 'Cash' | 'Card' | 'Bank Transfer';
+  orderStatus: 'Pending' | 'Confirmed' | 'Shipped' | 'Delivered' | 'Cancelled';
+  deliveryStatus: 'Pending' | 'In Transit' | 'Delivered' | 'Returned';
+  createdAt: string;
+}
+
+export const ordersHistory: Order[] = [
+  {
+    id: "1",
+    orderNumber: "ORD123",
+    orderDate: "2026-04-23",
+    customerName: "Rahul Sharma",
+    customerPhone: "9999999999",
+    items: [
+      {
+        productId: "P1",
+        productName: "Masala Chips",
+        quantity: 5,
+        unitPrice: 20,
+        totalPrice: 100,
+      }
+    ],
+    subtotal: 100,
+    tax: 18,
+    discount: 0,
+    totalAmount: 118,
+    paymentStatus: "Paid",
+    paymentMethod: "UPI",
+    orderStatus: "Delivered",
+    deliveryStatus: "Delivered",
+    createdAt: "2026-04-23"
+  },
+  {
+    id: "2",
+    orderNumber: "ORD124",
+    orderDate: "2026-04-22",
+    customerName: "Faiz",
+    customerPhone: "8888888888",
+    items: [
+      {
+        productId: "P2",
+        productName: "Bhujia Sev",
+        quantity: 10,
+        unitPrice: 20,
+        totalPrice: 200,
+      }
+    ],
+    subtotal: 200,
+    tax: 36,
+    discount: 0,
+    totalAmount: 236,
+    paymentStatus: "Pending",
+    paymentMethod: "Cash",
+    orderStatus: "Pending",
+    deliveryStatus: "Pending",
+    createdAt: "2026-04-22"
+  }
 ];

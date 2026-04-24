@@ -12,15 +12,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { 
   Save, 
   X, 
   Info, 
   Scale, 
   Truck, 
-  Warehouse, 
-  ScanBarcode
+  Warehouse
 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";

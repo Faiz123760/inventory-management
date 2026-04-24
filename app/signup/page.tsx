@@ -44,7 +44,7 @@ export default function SignupPage() {
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-xl bg-white shadow-sm border border-slate-200 flex items-center justify-center">
+              <div className="h-10 w-10 rounded-md bg-white shadow-sm border border-slate-200 flex items-center justify-center">
                 <Globe className="h-5 w-5 text-primary" />
               </div>
               <div>
@@ -53,7 +53,7 @@ export default function SignupPage() {
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-xl bg-white shadow-sm border border-slate-200 flex items-center justify-center">
+              <div className="h-10 w-10 rounded-md bg-white shadow-sm border border-slate-200 flex items-center justify-center">
                 <ShieldCheck className="h-5 w-5 text-emerald-500" />
               </div>
               <div>
@@ -64,9 +64,9 @@ export default function SignupPage() {
           </div>
         </div>
 
-        <Card className="bg-white border-slate-200 shadow-2xl rounded-[2rem] overflow-hidden animate-in-slide-up [animation-delay:200ms]">
+        <Card className="bg-white border-slate-200 shadow-2xl rounded-md overflow-hidden animate-in-slide-up [animation-delay:200ms]">
           <CardHeader className="space-y-6 border-b border-slate-100 bg-slate-50/50 p-8">
-            <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-primary text-white shadow-lg shadow-blue-200">
+            <div className="flex h-14 w-14 items-center justify-center rounded-md bg-primary text-white shadow-lg shadow-blue-200">
               <User className="h-8 w-8" />
             </div>
             <div>
@@ -85,7 +85,7 @@ export default function SignupPage() {
                   <Input 
                     id="name" 
                     placeholder="John Doe" 
-                    className="pl-10 h-11 bg-slate-50 border-slate-200 text-slate-900 rounded-xl focus-visible:ring-primary/20" 
+                    className="pl-10 h-11 bg-slate-50 border-slate-200 text-slate-900 rounded-md focus-visible:ring-primary/20" 
                   />
                 </div>
               </div>
@@ -97,7 +97,7 @@ export default function SignupPage() {
                     id="email" 
                     type="email" 
                     placeholder="john@example.com" 
-                    className="pl-10 h-11 bg-slate-50 border-slate-200 text-slate-900 rounded-xl focus-visible:ring-primary/20" 
+                    className="pl-10 h-11 bg-slate-50 border-slate-200 text-slate-900 rounded-md focus-visible:ring-primary/20" 
                   />
                 </div>
               </div>
@@ -109,7 +109,7 @@ export default function SignupPage() {
                     id="password" 
                     type={showPassword ? "text" : "password"} 
                     placeholder="••••••••" 
-                    className="pl-10 pr-10 h-11 bg-slate-50 border-slate-200 text-slate-900 rounded-xl focus-visible:ring-primary/20 transition-all" 
+                    className="pl-10 pr-10 h-11 bg-slate-50 border-slate-200 text-slate-900 rounded-md focus-visible:ring-primary/20 transition-all" 
                   />
                   <button
                     type="button"

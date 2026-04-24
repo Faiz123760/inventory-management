@@ -47,8 +47,8 @@ export default function LoginPage() {
               { icon: Boxes, title: "Catalog", desc: "Precision SKU tracking" },
               { icon: ShieldCheck, title: "Security", desc: "Military-grade audits" },
             ].map((item, i) => (
-              <div key={i} className="bg-white/60 backdrop-blur-md p-6 rounded-[2rem] border border-white shadow-sm hover:shadow-md hover:border-primary/20 transition-all duration-500 group">
-                <div className="h-10 w-10 rounded-xl bg-slate-50 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-500">
+              <div key={i} className="bg-white/60 backdrop-blur-md p-6 rounded-md border border-white shadow-sm hover:shadow-md hover:border-primary/20 transition-all duration-500 group">
+                <div className="h-10 w-10 rounded-md bg-white shadow-sm border border-slate-200 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-500">
                   <item.icon className="h-5 w-5 text-primary" />
                 </div>
                 <p className="text-sm font-bold text-slate-900">{item.title}</p>
@@ -59,9 +59,9 @@ export default function LoginPage() {
         </div>
 
         <div className="animate-in-slide-up [animation-delay:200ms]">
-          <Card className="bg-white/80 backdrop-blur-xl border-white shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] rounded-[3rem] overflow-hidden">
+          <Card className="bg-white/80 backdrop-blur-xl border-white shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] rounded-md overflow-hidden">
             <CardHeader className="space-y-6 p-10 pb-6">
-              <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary text-white shadow-xl shadow-blue-200">
+              <div className="flex h-14 w-14 items-center justify-center rounded-md bg-primary text-white shadow-lg shadow-blue-200">
                 <Command className="h-9 w-9" />
               </div>
               <div className="space-y-1">
@@ -81,7 +81,7 @@ export default function LoginPage() {
                       id="email" 
                       type="email" 
                       placeholder="admin@inventorypro.com" 
-                      className="pl-11 h-12 bg-slate-50/50 border-slate-200 text-slate-900 rounded-2xl focus-visible:ring-primary/10 focus-visible:border-primary/50 transition-all" 
+                      className="pl-10 h-11 bg-slate-50 border-slate-200 text-slate-900 rounded-md focus-visible:ring-primary/20 focus-visible:border-primary/50 transition-all" 
                     />
                   </div>
                 </div>
@@ -96,7 +96,7 @@ export default function LoginPage() {
                       id="password" 
                       type={showPassword ? "text" : "password"} 
                       placeholder="••••••••" 
-                      className="pl-11 pr-11 h-12 bg-slate-50/50 border-slate-200 text-slate-900 rounded-2xl focus-visible:ring-primary/10 focus-visible:border-primary/50 transition-all" 
+                      className="pl-10 pr-10 h-11 bg-slate-50 border-slate-200 text-slate-900 rounded-md focus-visible:ring-primary/20 focus-visible:border-primary/50 transition-all" 
                     />
                     <button
                       type="button"
@@ -108,7 +108,7 @@ export default function LoginPage() {
                   </div>
                 </div>
 
-                <Button asChild className="h-14 w-full mt-2 rounded-2xl text-base font-bold shadow-xl shadow-blue-100 hover:shadow-2xl transition-all duration-300">
+                <Button asChild className="h-14 w-full mt-2 rounded-md text-base font-bold shadow-xl shadow-blue-100 hover:shadow-2xl transition-all duration-300">
                   <Link href="/dashboard" className="flex items-center justify-center gap-2">
                     Sign In to Portal
                     <ArrowRight className="h-5 w-5" />

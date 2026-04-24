@@ -1,7 +1,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { TypeIcon as type, LucideIcon } from 'lucide-react'
+import { LucideIcon } from 'lucide-react'
 
 import {
   SidebarGroup,
@@ -32,7 +32,7 @@ export function NavSecondary({
             return (
               <SidebarMenuItem key={item.title}>
                 <SidebarMenuButton asChild size="sm" isActive={isActive}>
-                  <Link href={item.url}>
+                  <Link href={item.url as any}>
                     {item.icon && <item.icon />}
                     <span>{item.title}</span>
                   </Link>

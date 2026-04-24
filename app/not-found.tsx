@@ -23,7 +23,7 @@ export default function NotFound() {
             404
           </CardTitle>
           <CardDescription className="text-lg">
-            Oops! The page you're looking for doesn't exist.
+            Oops! The page you&apos;re looking for doesn&apos;t exist.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">

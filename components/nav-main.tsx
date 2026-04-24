@@ -1,25 +1,13 @@
 "use client";
 
-import { ChevronRight, TypeIcon as type, type LucideIcon } from "lucide-react";
+import { type LucideIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
-
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
 import {
   SidebarGroup,
-  SidebarGroupLabel,
   SidebarMenu,
-  SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 
 export function NavMain({
@@ -29,84 +17,63 @@ export function NavMain({
     title: string;
     url: string;
     icon?: LucideIcon;
-    isActive?: boolean;
-    items?: {
-      title: string;
-      url: string;
-    }[];
+    badge?: string | number;
   }[];
 }) {
   const pathname = usePathname();
-  const [openItems, setOpenItems] = useState<Record<string, boolean>>({});
 
   return (
-    <SidebarGroup>
-      <SidebarGroupLabel>Main Options</SidebarGroupLabel>
-      <SidebarMenu>
+    <SidebarGroup className="px-0 py-0">
+      <SidebarMenu className="gap-0.5">
         {items.map((item) => {
           const isActive =
-            pathname === item.url ||
-            (item.items &&
-              item.items.some((subItem) => pathname === subItem.url));
-          const hasSubItems = item.items && item.items.length > 0;
-          const isOpen = openItems[item.title] ?? true; // Default to open
+            pathname === item.url || pathname.startsWith(item.url + "/");
+          const Icon = item.icon;
 
           return (
-            <Collapsible
-              key={item.title}
-              asChild
-              open={isOpen}
-              onOpenChange={(open) =>
-                setOpenItems((prev) => ({ ...prev, [item.title]: open }))
-              }
-            >
-              <SidebarMenuItem>
-                {hasSubItems ? (
-                  // If has sub-items, make it a collapsible trigger only
-                  <CollapsibleTrigger asChild>
-                    <SidebarMenuButton tooltip={item.title} isActive={isActive}>
-                      {item.icon && <item.icon />}
-                      <span>{item.title}</span>
-                      <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-                    </SidebarMenuButton>
-                  </CollapsibleTrigger>
-                ) : (
-                  // If no sub-items, make it a regular link
-                  <SidebarMenuButton
-                    asChild
-                    tooltip={item.title}
-                    isActive={isActive}
-                  >
-                    <Link href={item.url as any}>
-                      {item.icon && <item.icon />}
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                )}
-
-                {hasSubItems && (
-                  <CollapsibleContent>
-                    <SidebarMenuSub>
-                      {item.items?.map((subItem) => {
-                        const isSubActive = pathname === subItem.url;
-                        return (
-                          <SidebarMenuSubItem key={subItem.title}>
-                            <SidebarMenuSubButton
-                              asChild
-                              isActive={isSubActive}
-                            >
-                              <Link href={subItem.url as any}>
-                                <span>{subItem.title}</span>
-                              </Link>
-                            </SidebarMenuSubButton>
-                          </SidebarMenuSubItem>
-                        );
-                      })}
-                    </SidebarMenuSub>
-                  </CollapsibleContent>
-                )}
-              </SidebarMenuItem>
-            </Collapsible>
+            <SidebarMenuItem key={item.title}>
+              <SidebarMenuButton
+                asChild
+                isActive={isActive}
+                tooltip={item.title}
+                className={`
+                  relative flex items-center gap-3 px-3 py-2 rounded-lg text-[13px] font-medium
+                  transition-all duration-150 cursor-pointer h-auto
+                  ${isActive
+                    ? "bg-blue-500/10 text-blue-400 border-l-2 border-blue-500 pl-[10px]"
+                    : "text-slate-400 hover:bg-white/5 hover:text-slate-200"
+                  }
+                  group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-2
+                `}
+              >
+                <Link
+                  href={item.url as any}
+                  className="flex w-full items-center gap-3 group-data-[collapsible=icon]:justify-center"
+                >
+                  {Icon && (
+                    <Icon
+                      className={`h-4 w-4 shrink-0 transition-colors ${
+                        isActive ? "text-blue-400" : "text-slate-500 group-hover:text-slate-300"
+                      }`}
+                    />
+                  )}
+                  <span className="truncate group-data-[collapsible=icon]:hidden">
+                    {item.title}
+                  </span>
+                  {item.badge !== undefined && (
+                    <span
+                      className={`ml-auto text-[10px] font-bold px-1.5 py-0.5 rounded-full shrink-0 group-data-[collapsible=icon]:hidden ${
+                        isActive
+                          ? "bg-blue-500/20 text-blue-300"
+                          : "bg-white/8 text-slate-500"
+                      }`}
+                    >
+                      {item.badge}
+                    </span>
+                  )}
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
           );
         })}
       </SidebarMenu>

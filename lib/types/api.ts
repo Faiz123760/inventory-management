@@ -80,7 +80,7 @@ export interface CreateSweetRequest {
   lowStockThreshold: number;
 }
 
-export interface UpdateSweetRequest extends Partial<CreateSweetRequest> {}
+export type UpdateSweetRequest = Partial<CreateSweetRequest>
 
 export interface Inventory extends BaseEntity {
   sweet: Sweet;

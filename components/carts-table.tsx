@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { useMemo, useState } from 'react'
+import { useMemo, useState } from "react";
 import {
   Table,
   TableBody,
@@ -8,24 +8,41 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table'
-import { Input } from '@/components/ui/input'
-import { Search, ShoppingCart } from 'lucide-react'
-import { mockCarts } from '@/lib/mock-data'
+} from "@/components/ui/table";
+import { Input } from "@/components/ui/input";
+import { Search, ShoppingCart, Trash2, CheckCircle2 } from "lucide-react";
+import { useAppStore } from "@/lib/store";
+import { Button } from "@/components/ui/button";
 
 export function CartsTable() {
-  const [searchTerm, setSearchTerm] = useState('')
+  const { state, updateOrderStatus, deleteOrder } = useAppStore();
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const carts = useMemo(
+    () =>
+      state.orders
+        .filter((order) => order.orderStatus === "Pending" || order.orderStatus === "Confirmed")
+        .map((order) => ({
+          id: order.id,
+          orderNumber: order.orderNumber,
+          customer: order.customerName,
+          productSummary: order.items.map((item) => item.productName).join(", "),
+          quantity: order.items.reduce((sum, item) => sum + item.quantity, 0),
+          createdAt: order.createdAt,
+        })),
+    [state.orders]
+  );
 
   const filteredCarts = useMemo(
     () =>
-      mockCarts.filter((cart) =>
-        [cart.user, typeof cart.sweet === 'string' ? cart.sweet : cart.sweet?.name]
-          .join(' ')
+      carts.filter((cart) =>
+        [cart.orderNumber, cart.customer, cart.productSummary]
+          .join(" ")
           .toLowerCase()
           .includes(searchTerm.toLowerCase())
       ),
-    [searchTerm]
-  )
+    [carts, searchTerm]
+  );
 
   return (
     <div className="space-y-4">
@@ -46,28 +63,41 @@ export function CartsTable() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>User ID</TableHead>
-              <TableHead>Product</TableHead>
+              <TableHead>Order #</TableHead>
+              <TableHead>Customer</TableHead>
+              <TableHead>Items</TableHead>
               <TableHead>Quantity</TableHead>
               <TableHead>Added At</TableHead>
+              <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {filteredCarts.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={4} className="text-center py-8">
-                  {searchTerm ? 'No carts found matching your search.' : 'No carts available.'}
+                <TableCell colSpan={6} className="text-center py-8">
+                  {searchTerm ? "No carts found matching your search." : "No carts available."}
                 </TableCell>
               </TableRow>
             ) : (
               filteredCarts.map((cart) => (
-                <TableRow key={cart._id}>
-                  <TableCell className="font-medium text-xs font-mono">{cart.user}</TableCell>
-                  <TableCell>
-                    {typeof cart.sweet === 'string' ? cart.sweet : cart.sweet?.name || 'Unknown'}
-                  </TableCell>
+                <TableRow key={cart.id}>
+                  <TableCell className="font-medium">{cart.orderNumber}</TableCell>
+                  <TableCell>{cart.customer}</TableCell>
+                  <TableCell className="max-w-70 truncate">{cart.productSummary}</TableCell>
                   <TableCell>{cart.quantity}</TableCell>
                   <TableCell>{new Date(cart.createdAt).toLocaleDateString()}</TableCell>
+                  <TableCell className="text-right space-x-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => updateOrderStatus(cart.id, "Confirmed")}
+                    >
+                      <CheckCircle2 className="h-4 w-4 mr-1" /> Checkout
+                    </Button>
+                    <Button variant="ghost" size="icon" onClick={() => deleteOrder(cart.id)}>
+                      <Trash2 className="h-4 w-4 text-rose-500" />
+                    </Button>
+                  </TableCell>
                 </TableRow>
               ))
             )}
@@ -75,5 +105,5 @@ export function CartsTable() {
         </Table>
       </div>
     </div>
-  )
+  );
 }
