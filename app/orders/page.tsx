@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { useRouter } from "next/navigation";
 import { PageHeader } from "@/components/page-header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,6 +14,7 @@ import {
   ShoppingBag,
   Clock,
   CheckCircle2,
+  Factory,
 } from "lucide-react";
 import { Order } from "@/lib/snack-mock-data";
 import { OrdersTable } from "@/components/OrdersTable";
@@ -29,6 +31,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useAppStore } from "@/lib/store";
 
 export default function OrdersPage() {
+  const router = useRouter();
   const { toast } = useToast();
   const { state, addOrder, updateOrderStatus, deleteOrder } = useAppStore();
 
@@ -113,6 +116,15 @@ export default function OrdersPage() {
             <p className="page-subtitle">Track orders, revenue, and delivery status.</p>
           </div>
           <div className="flex items-center gap-3">
+            <Button
+              variant="outline"
+              size="sm"
+              className="bg-white border-slate-200 text-slate-600 h-10 font-semibold rounded-lg hover:bg-slate-50"
+              onClick={() => router.push("/production")}
+            >
+              <Factory className="mr-2 h-4 w-4 text-primary" /> Production
+            </Button>
+
             <Button
               variant="outline"
               size="sm"

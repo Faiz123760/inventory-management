@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { FileText, Eye, Trash2 } from "lucide-react";
+import { FileText, Eye, Trash2, Factory } from "lucide-react";
 import { StatusBadge } from "./StatusBadge";
 import { Order } from "@/lib/snack-mock-data";
 import { useRouter } from "next/navigation";
@@ -106,6 +106,9 @@ export function OrdersTable({ orders, onStatusChange, onPaymentChange, onDelete 
                 <div className="flex justify-end gap-2">
                   <Button variant="ghost" size="icon" onClick={() => router.push(`/orders/${order.id}`)}>
                     <Eye className="h-4 w-4 text-slate-500" />
+                  </Button>
+                  <Button variant="ghost" size="icon" onClick={() => router.push(`/production?orderId=${order.orderNumber}`)}>
+                    <Factory className="h-4 w-4 text-primary" />
                   </Button>
                   <Button variant="ghost" size="icon">
                     <FileText className="h-4 w-4 text-slate-500" />

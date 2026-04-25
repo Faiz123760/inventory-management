@@ -144,11 +144,25 @@ export const rawMaterials: RawMaterial[] = [
 ];
 
 export const snackProducts: Product[] = [
-  { product_id: "PR001", name: "Royal Dalmoth Mix", category: "dalmoth", stock_quantity: 450, unit: "packets", selling_price: 120, sku: 12, status: "In Stock", image: "/products/kurkure.png" },
-  { product_id: "PR002", name: "Classic Salted Chips", category: "chips", stock_quantity: 320, unit: "packets", selling_price: 25, sku: 24, status: "In Stock", image: "/products/chips.png" },
-  { product_id: "PR003", name: "Spicy Masala Dalmoth", category: "dalmoth", stock_quantity: 15, unit: "packets", selling_price: 80, sku: 12, status: "Low Stock", image: "/products/kurkure.png" },
-  { product_id: "PR004", name: "Tomato Tango Chips", category: "chips", stock_quantity: 210, unit: "packets", selling_price: 30, sku: 24, status: "In Stock", image: "/products/chips.png" },
-  { product_id: "PR005", name: "Peri Peri Chips", category: "chips", stock_quantity: 0, unit: "packets", selling_price: 35, sku: 24, status: "Out of Stock", image: "/products/chips.png" },
+  { 
+    product_id: "PR001", name: "Royal Dalmoth Mix", category: "dalmoth", stock_quantity: 450, unit: "packets", selling_price: 120, sku: 12, status: "In Stock", image: "/products/kurkure.png",
+    recipe: [
+      { material_id: "RM001", quantity: 0.5 },
+      { material_id: "RM002", quantity: 0.2 },
+      { material_id: "RM004", quantity: 0.01 },
+    ]
+  },
+  { 
+    product_id: "PR002", name: "Classic Salted Chips", category: "chips", stock_quantity: 320, unit: "packets", selling_price: 25, sku: 24, status: "In Stock", image: "/products/chips.png",
+    recipe: [
+      { material_id: "RM003", quantity: 0.4 },
+      { material_id: "RM002", quantity: 0.05 },
+      { material_id: "RM005", quantity: 1 },
+    ]
+  },
+  { product_id: "PR003", name: "Spicy Masala Dalmoth", category: "dalmoth", stock_quantity: 15, unit: "packets", selling_price: 80, sku: 12, status: "Low Stock", image: "/products/kurkure.png", recipe: [] },
+  { product_id: "PR004", name: "Tomato Tango Chips", category: "chips", stock_quantity: 210, unit: "packets", selling_price: 30, sku: 24, status: "In Stock", image: "/products/chips.png", recipe: [] },
+  { product_id: "PR005", name: "Peri Peri Chips", category: "chips", stock_quantity: 0, unit: "packets", selling_price: 35, sku: 24, status: "Out of Stock", image: "/products/chips.png", recipe: [] },
 ];
 
 export const stockLogs: StockLog[] = [
@@ -242,10 +256,58 @@ export interface Order {
   totalAmount: number;
   paymentStatus: 'Paid' | 'Unpaid' | 'Partial' | 'Pending';
   paymentMethod: 'UPI' | 'Cash' | 'Card' | 'Bank Transfer';
-  orderStatus: 'Pending' | 'Confirmed' | 'Shipped' | 'Delivered' | 'Cancelled';
+  orderStatus: 'Pending' | 'Confirmed' | 'Shipped' | 'Delivered' | 'Cancelled' | 'Processing';
   deliveryStatus: 'Pending' | 'In Transit' | 'Delivered' | 'Returned';
   createdAt: string;
 }
+
+export interface ProductionRun {
+  id: string;
+  orderId?: string;
+  orderNumber?: string;
+  productId: string;
+  productName: string;
+  quantity: number;
+  status: 'Pending' | 'In Progress' | 'Completed' | 'Cancelled';
+  startDate: string;
+  endDate?: string;
+  materialsUsed: Array<{
+    materialId: string;
+    name: string;
+    quantity: number;
+    unit: string;
+  }>;
+}
+
+export const productionRuns: ProductionRun[] = [
+  {
+    id: "PRD-001",
+    orderId: "1",
+    orderNumber: "ORD123",
+    productId: "PR001",
+    productName: "Royal Dalmoth Mix",
+    quantity: 100,
+    status: "Completed",
+    startDate: "2026-04-20",
+    endDate: "2026-04-21",
+    materialsUsed: [
+      { materialId: "RM001", name: "Corn Meal", quantity: 50, unit: "kg" },
+      { materialId: "RM002", name: "Palm Oil", quantity: 20, unit: "litre" },
+    ]
+  },
+  {
+    id: "PRD-002",
+    productId: "PR002",
+    productName: "Classic Salted Chips",
+    quantity: 200,
+    status: "In Progress",
+    startDate: "2026-04-23",
+    materialsUsed: [
+      { materialId: "RM003", name: "Potato", quantity: 80, unit: "kg" },
+      { materialId: "RM002", name: "Palm Oil", quantity: 10, unit: "litre" },
+    ]
+  }
+];
 
 export const ordersHistory: Order[] = [
   {

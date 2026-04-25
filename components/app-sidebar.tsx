@@ -12,7 +12,7 @@ import {
   Settings2,
   Bell,
   ChevronsUpDown,
-  
+
   ClipboardList,
 } from "lucide-react";
 
@@ -49,7 +49,7 @@ const data = {
     { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
     { title: "Products", url: "/products", icon: Package },
     { title: "Raw Materials", url: "/raw-materials", icon: Factory },
-    { title: "Bill of Materials", url: "/bom", icon: ClipboardList },
+    { title: "Production", url: "/production", icon: ClipboardList },
   ],
   sales: [
     { title: "Orders", url: "/orders", icon: ShoppingCart },

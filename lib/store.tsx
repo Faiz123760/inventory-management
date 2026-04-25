@@ -20,6 +20,8 @@ import {
   Supplier,
   Customer,
   BOM,
+  ProductionRun,
+  productionRuns as initialProductionRuns,
 } from "@/lib/snack-mock-data";
 
 // ─── Purchase type ──────────────────────────────────────────────────────────
@@ -53,6 +55,7 @@ interface AppState {
   customers: Customer[];
   suppliers: Supplier[];
   boms: BOM[];
+  productionRuns: ProductionRun[];
 }
 
 const initialState: AppState = {
@@ -63,6 +66,7 @@ const initialState: AppState = {
   customers: initialCustomers,
   suppliers: initialSuppliers,
   boms: initialBoms,
+  productionRuns: initialProductionRuns,
 };
 
 // ─── Actions ────────────────────────────────────────────────────────────────
@@ -95,7 +99,11 @@ type Action =
   // BOMs
   | { type: "ADD_BOM"; payload: BOM }
   | { type: "UPDATE_BOM"; payload: BOM }
-  | { type: "DELETE_BOM"; payload: string };
+  | { type: "DELETE_BOM"; payload: string }
+  // Production Runs
+  | { type: "ADD_PRODUCTION_RUN"; payload: ProductionRun }
+  | { type: "UPDATE_PRODUCTION_RUN"; payload: ProductionRun }
+  | { type: "DELETE_PRODUCTION_RUN"; payload: string };
 
 function reducer(state: AppState, action: Action): AppState {
   switch (action.type) {
@@ -164,6 +172,14 @@ function reducer(state: AppState, action: Action): AppState {
     case "DELETE_BOM":
       return { ...state, boms: state.boms.filter((b) => b.id !== action.payload) };
 
+    // ── Production Runs ──
+    case "ADD_PRODUCTION_RUN":
+      return { ...state, productionRuns: [action.payload, ...state.productionRuns] };
+    case "UPDATE_PRODUCTION_RUN":
+      return { ...state, productionRuns: state.productionRuns.map((p) => p.id === action.payload.id ? action.payload : p) };
+    case "DELETE_PRODUCTION_RUN":
+      return { ...state, productionRuns: state.productionRuns.filter((p) => p.id !== action.payload) };
+
     default:
       return state;
   }
@@ -194,6 +210,9 @@ interface AppContextValue {
   addBom: (b: BOM) => void;
   updateBom: (b: BOM) => void;
   deleteBom: (id: string) => void;
+  addProductionRun: (p: ProductionRun) => void;
+  updateProductionRun: (p: ProductionRun) => void;
+  deleteProductionRun: (id: string) => void;
   // Computed
   totalRevenue: number;
   lowStockCount: number;
@@ -239,6 +258,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const updateBom = useCallback((b: BOM) => dispatch({ type: "UPDATE_BOM", payload: b }), []);
   const deleteBom = useCallback((id: string) => dispatch({ type: "DELETE_BOM", payload: id }), []);
 
+  const addProductionRun    = useCallback((p: ProductionRun) => dispatch({ type: "ADD_PRODUCTION_RUN", payload: p }), []);
+  const updateProductionRun = useCallback((p: ProductionRun) => dispatch({ type: "UPDATE_PRODUCTION_RUN", payload: p }), []);
+  const deleteProductionRun = useCallback((id: string) => dispatch({ type: "DELETE_PRODUCTION_RUN", payload: id }), []);
+
   // Computed values (memoized via inline computation — small dataset)
   const totalRevenue       = state.orders.reduce((s, o) => s + o.totalAmount, 0);
   const lowStockCount      = state.materials.filter((m) => m.current_stock < 50).length + state.products.filter((p) => p.stock_quantity <= 0).length;
@@ -254,6 +277,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       addCustomer, updateCustomer, deleteCustomer,
       addSupplier, deleteSupplier,
       addBom, updateBom, deleteBom,
+      addProductionRun, updateProductionRun, deleteProductionRun,
       totalRevenue, lowStockCount, pendingOrdersCount,
     }}>
       {children}
