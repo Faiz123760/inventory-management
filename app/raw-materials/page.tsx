@@ -92,9 +92,9 @@ function FormFields({
           />
         </div>
         <div className="space-y-1.5 md:col-span-2">
-          <Label className="text-[11px] font-bold text-slate-500 ml-1 uppercase tracking-wider">Cost / Unit (₹)</Label>
+          <Label className="text-[11px] font-bold text-slate-500 ml-1 uppercase tracking-wider">Cost / Unit (INR)</Label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 font-semibold text-xs">₹</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 font-semibold text-xs">INR</span>
             <Input
               type="number"
               min="0"
@@ -182,7 +182,7 @@ export default function RawMaterialsPage() {
     <div className="flex flex-1 flex-col bg-background animate-in-fade">
       <PageHeader title="Raw Materials" breadcrumbs={[{ title: "Inventory" }, { title: "Raw Materials" }]} />
 
-      <main className="flex-1 p-4 md:p-6 space-y-5">
+      <main className="flex-1 p-3 space-y-3">
         {/* Header */}
         <div className="page-section-header animate-in-slide-up">
           <div><h1 className="page-title">Raw Materials</h1><p className="page-subtitle">Manage ingredient inventory, costs, and stock levels.</p></div>
@@ -210,9 +210,9 @@ export default function RawMaterialsPage() {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-3 gap-4 animate-in-slide-up [animation-delay:50ms]">
+        <div className="grid grid-cols-3 gap-3 animate-in-slide-up [animation-delay:50ms]">
           <div className="stat-card"><div className="stat-icon bg-blue-50"><Warehouse className="h-5 w-5 text-primary" /></div><div><p className="stat-label">Total Items</p><p className="stat-value">{materials.length}</p></div></div>
-          <div className="stat-card"><div className="stat-icon bg-emerald-50"><IndianRupee className="h-5 w-5 text-emerald-600" /></div><div><p className="stat-label">Stock Value</p><p className="stat-value text-xl">₹{totalValue.toLocaleString()}</p></div></div>
+          <div className="stat-card"><div className="stat-icon bg-emerald-50"><IndianRupee className="h-5 w-5 text-emerald-600" /></div><div><p className="stat-label">Stock Value</p><p className="stat-value text-xl">INR {totalValue.toLocaleString()}</p></div></div>
           <div className="stat-card"><div className="stat-icon bg-amber-50"><AlertTriangle className="h-5 w-5 text-amber-500" /></div><div><p className="stat-label">Low Stock</p><p className={`stat-value ${lowCount > 0 ? "text-amber-600" : ""}`}>{lowCount}</p></div></div>
         </div>
 
@@ -255,8 +255,8 @@ export default function RawMaterialsPage() {
                       <div className="h-1.5 w-20 bg-slate-100 rounded-full overflow-hidden"><div className={`h-full rounded-full ${item.current_stock > 100 ? "bg-primary" : item.current_stock > 30 ? "bg-amber-400" : "bg-rose-500"}`} style={{ width: `${Math.min(100, (item.current_stock / 1200) * 100)}%` }} /></div>
                     </div>
                   </TableCell>
-                  <TableCell className="td font-semibold text-slate-900">₹{item.cost_per_unit.toLocaleString()}</TableCell>
-                  <TableCell className="td font-bold text-slate-900">₹{(item.current_stock * item.cost_per_unit).toLocaleString()}</TableCell>
+                  <TableCell className="td font-semibold text-slate-900">INR {item.cost_per_unit.toLocaleString()}</TableCell>
+                  <TableCell className="td font-bold text-slate-900">INR {(item.current_stock * item.cost_per_unit).toLocaleString()}</TableCell>
                   <TableCell className="text-right pr-6 td">
                     <div className="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                       <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-primary hover:bg-blue-50 rounded-lg" onClick={() => openEdit(item)}><Edit2 className="h-3.5 w-3.5" /></Button>

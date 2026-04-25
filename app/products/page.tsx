@@ -108,9 +108,9 @@ const ProductForm = ({
         </Select>
       </div>
       <div className="space-y-1.5">
-        <Label className="text-[11px] font-bold text-slate-500 ml-1 uppercase tracking-wider">Selling Price (₹)</Label>
+        <Label className="text-[11px] font-bold text-slate-500 ml-1 uppercase tracking-wider">Selling Price (INR)</Label>
         <div className="relative">
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 font-semibold text-xs">₹</span>
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 font-semibold text-xs">INR</span>
           <Input
             type="number"
             step="0.01"
@@ -316,7 +316,7 @@ export default function ProductsPage() {
     <div className="flex flex-1 flex-col bg-background animate-in-fade">
       <PageHeader title="Products" breadcrumbs={[{ title: "Inventory" }, { title: "Products" }]} />
 
-      <main className="flex-1 p-4 md:p-6 space-y-5">
+      <main className="flex-1 p-3 space-y-3">
         {/* Header */}
         <div className="page-section-header animate-in-slide-up">
           <div><h1 className="page-title">Product Catalog</h1><p className="page-subtitle">Manage finished goods, prices, and stock levels.</p></div>
@@ -349,9 +349,9 @@ export default function ProductsPage() {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 animate-in-slide-up [animation-delay:50ms]">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 animate-in-slide-up [animation-delay:50ms]">
           <div className="stat-card"><div className="stat-icon bg-blue-50"><Package className="h-5 w-5 text-primary" /></div><div><p className="stat-label">Total Products</p><p className="stat-value">{products.length}</p></div></div>
-          <div className="stat-card"><div className="stat-icon bg-emerald-50"><IndianRupee className="h-5 w-5 text-emerald-600" /></div><div><p className="stat-label">Catalog Value</p><p className="stat-value text-xl">₹{totalValue.toLocaleString()}</p></div></div>
+          <div className="stat-card"><div className="stat-icon bg-emerald-50"><IndianRupee className="h-5 w-5 text-emerald-600" /></div><div><p className="stat-label">Catalog Value</p><p className="stat-value text-xl">INR {totalValue.toLocaleString()}</p></div></div>
           <div className="stat-card"><div className="stat-icon bg-violet-50"><Layers className="h-5 w-5 text-violet-600" /></div><div><p className="stat-label">In Stock</p><p className="stat-value">{products.filter((p) => p.stock_quantity > 20).length}</p></div></div>
           <div className="stat-card"><div className="stat-icon bg-rose-50"><AlertTriangle className="h-5 w-5 text-rose-500" /></div><div><p className="stat-label">Low / Out</p><p className={`stat-value ${lowStockCount > 0 ? "text-rose-600" : ""}`}>{lowStockCount}</p></div></div>
         </div>
@@ -414,7 +414,7 @@ export default function ProductsPage() {
                           <span className="text-[12px] text-slate-400 italic">No recipe</span>
                         )}
                       </TableCell>
-                      <TableCell className="td text-right font-bold text-slate-900">₹{product.selling_price.toLocaleString()}</TableCell>
+                      <TableCell className="td text-right font-bold text-slate-900">INR {product.selling_price.toLocaleString()}</TableCell>
                       <TableCell className="td text-center"><StockBadge qty={product.stock_quantity} /></TableCell>
                       <TableCell className="td text-center text-slate-500 text-[13px]">{product.sku || "—"}</TableCell>
                       <TableCell className="pr-6 td text-right">

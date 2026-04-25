@@ -26,7 +26,7 @@ export default function ReportsPage() {
     <div className="flex flex-1 flex-col bg-background animate-in-fade">
       <PageHeader title="Reports" breadcrumbs={[{ title: "Analytics" }, { title: "Reports" }]} />
 
-      <main className="flex-1 p-4 md:p-6 space-y-5">
+      <main className="flex-1 p-3 space-y-3">
         {/* ── Header ── */}
         <div className="page-section-header animate-in-slide-up">
           <div>
@@ -44,15 +44,15 @@ export default function ReportsPage() {
         </div>
 
         {/* ── KPIs ── */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 animate-in-slide-up [animation-delay:50ms]">
-          <div className="stat-card"><div className="stat-icon bg-blue-50"><IndianRupee className="h-5 w-5 text-primary" /></div><div><p className="stat-label">Total Revenue</p><p className="stat-value text-xl">₹5.4L</p><p className="stat-change-up">+22% YoY</p></div></div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 animate-in-slide-up [animation-delay:50ms]">
+          <div className="stat-card"><div className="stat-icon bg-blue-50"><IndianRupee className="h-5 w-5 text-primary" /></div><div><p className="stat-label">Total Revenue</p><p className="stat-value text-xl">INR 5.4L</p><p className="stat-change-up">+22% YoY</p></div></div>
           <div className="stat-card"><div className="stat-icon bg-emerald-50"><TrendingUp className="h-5 w-5 text-emerald-600" /></div><div><p className="stat-label">Monthly Growth</p><p className="stat-value text-xl">18%</p><p className="stat-change-up">+6% vs last mo.</p></div></div>
           <div className="stat-card"><div className="stat-icon bg-orange-50"><Package className="h-5 w-5 text-orange-500" /></div><div><p className="stat-label">Units Sold</p><p className="stat-value text-xl">12.8K</p><p className="stat-change-up">+5% this week</p></div></div>
-          <div className="stat-card"><div className="stat-icon bg-violet-50"><BarChart3 className="h-5 w-5 text-violet-600" /></div><div><p className="stat-label">Avg. Order Value</p><p className="stat-value text-xl">₹2,840</p><p className="stat-change-up">+9% this month</p></div></div>
+          <div className="stat-card"><div className="stat-icon bg-violet-50"><BarChart3 className="h-5 w-5 text-violet-600" /></div><div><p className="stat-label">Avg. Order Value</p><p className="stat-value text-xl">INR 2,840</p><p className="stat-change-up">+9% this month</p></div></div>
         </div>
 
         {/* ── Charts ── */}
-        <div className="grid gap-4 md:grid-cols-2 animate-in-slide-up [animation-delay:100ms]">
+        <div className="grid gap-3 md:grid-cols-2 animate-in-slide-up [animation-delay:100ms]">
           {/* Monthly Revenue */}
           <Card className="surface">
             <CardHeader className="surface-header flex-row items-center justify-between space-y-0">

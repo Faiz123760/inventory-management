@@ -12,7 +12,7 @@ import {
   Settings2,
   Bell,
   ChevronsUpDown,
-
+  Receipt,
   ClipboardList,
 } from "lucide-react";
 
@@ -47,21 +47,18 @@ const data = {
   },
   navMain: [
     { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
-    { title: "Products", url: "/products", icon: Package },
     { title: "Raw Materials", url: "/raw-materials", icon: Factory },
-    { title: "Production", url: "/production", icon: ClipboardList },
-  ],
-  sales: [
-    { title: "Orders", url: "/orders", icon: ShoppingCart },
+    { title: "Products", url: "/products", icon: Package },
+    { title: "Supplier", url: "/suppliers", icon: Users },
+    { title: "Customer", url: "/customers", icon: User },
     { title: "Purchase History", url: "/purchases", icon: History },
-
-    { title: "Customers", url: "/customers", icon: User },
-    { title: "Suppliers", url: "/suppliers", icon: Users },
-  ],
-  system: [
+    { title: "Orders", url: "/orders", icon: ShoppingCart },
+    { title: "Production", url: "/production", icon: ClipboardList },
+    { title: "Sale Invoice", url: "/invoices", icon: Receipt },
     { title: "Notifications", url: "/alerts", icon: Bell },
     { title: "Settings", url: "/settings", icon: Settings2 },
   ],
+
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -107,7 +104,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent className="gap-0 py-2">
         <SidebarGroup>
           <SidebarGroupContent>
-            <NavMain items={[...data.navMain, ...data.sales, ...data.system]} />
+            <NavMain items={data.navMain} />
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>

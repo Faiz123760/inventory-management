@@ -89,7 +89,7 @@ export default function PurchasesPage() {
         breadcrumbs={[{ title: "Finance" }, { title: "Purchases" }]}
       />
 
-      <main className="flex-1 space-y-6 p-4 md:p-8">
+      <main className="flex-1 p-3 space-y-3">
         <div className="page-section-header animate-in-slide-up">
           <div>
             <h1 className="page-title">Purchasing & Procurement</h1>
@@ -156,9 +156,9 @@ export default function PurchasesPage() {
                       />
                     </div>
                     <div className="space-y-1.5">
-                      <Label className="text-[11px] font-bold text-slate-500 ml-1 uppercase tracking-wider">Cost / Unit (₹)</Label>
+                      <Label className="text-[11px] font-bold text-slate-500 ml-1 uppercase tracking-wider">Cost / Unit (INR)</Label>
                       <div className="relative">
-                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 font-semibold text-xs">₹</span>
+                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 font-semibold text-xs">INR</span>
                         <Input
                           type="number"
                           placeholder="0.00"
@@ -177,12 +177,12 @@ export default function PurchasesPage() {
                       <div className="space-y-0.5">
                         <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Estimated Total</p>
                         <p className="text-3xl font-black text-slate-900 tracking-tighter">
-                          ₹{(estimatedTotal > 0 ? estimatedTotal : 0).toLocaleString()}
+                          INR {(estimatedTotal > 0 ? estimatedTotal : 0).toLocaleString()}
                         </p>
                       </div>
                       <div className="text-right space-y-0.5 opacity-60">
                         <p className="text-[11px] font-medium text-slate-500">
-                          {form.quantity && form.cost ? `${form.quantity} × ₹${form.cost}` : "—"}
+                          {form.quantity && form.cost ? `${form.quantity} × INR ${form.cost}` : "—"}
                         </p>
                       </div>
                     </div>
@@ -197,7 +197,7 @@ export default function PurchasesPage() {
         </div>
 
         {/* KPI Cards */}
-        <div className="grid gap-4 md:grid-cols-4 animate-in-slide-up [animation-delay:50ms]">
+        <div className="grid gap-3 md:grid-cols-4 animate-in-slide-up [animation-delay:50ms]">
           <div className="stat-card">
             <div className="stat-icon bg-blue-50"><ShoppingCart className="h-5 w-5 text-primary" /></div>
             <div><p className="stat-label">Total POs</p><p className="stat-value">{purchases.length}</p></div>
@@ -212,7 +212,7 @@ export default function PurchasesPage() {
           </div>
           <div className="stat-card">
             <div className="stat-icon bg-violet-50"><IndianRupee className="h-5 w-5 text-violet-500" /></div>
-            <div><p className="stat-label">Total Spend</p><p className="stat-value text-xl">₹{totalSpend.toLocaleString()}</p></div>
+            <div><p className="stat-label">Total Spend</p><p className="stat-value text-xl">INR {totalSpend.toLocaleString()}</p></div>
           </div>
         </div>
 
@@ -273,7 +273,7 @@ export default function PurchasesPage() {
                     <TableCell className="font-semibold text-slate-900">{order.supplierName}</TableCell>
                     <TableCell className="text-slate-600 text-sm font-medium">{order.materialName}</TableCell>
                     <TableCell className="text-slate-600 text-sm font-medium">{order.quantity} {order.unit}</TableCell>
-                    <TableCell className="font-bold text-slate-900">₹{order.totalCost.toLocaleString()}</TableCell>
+                    <TableCell className="font-bold text-slate-900">INR {order.totalCost.toLocaleString()}</TableCell>
                     <TableCell>
                       <Select value={order.status} onValueChange={(v) => updatePurchaseStatus(order.id, v as typeof order.status)}>
                         <SelectTrigger className="h-8 w-32 text-[11px]">

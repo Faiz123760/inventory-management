@@ -41,7 +41,7 @@ function BOMPageContent() {
   const [statusFilter, setStatusFilter] = useState("all");
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [viewBom, setViewBom] = useState<BOM | null>(null);
-  
+
   const searchParams = useSearchParams();
   const initialOrderId = searchParams.get("orderId");
 
@@ -158,7 +158,7 @@ function BOMPageContent() {
 
     order.items.forEach(item => {
       const bom = boms.find(b => b.product_id === item.productId || b.product_name === item.productName);
-      
+
       if (bom) {
         bom.items.forEach(bomItem => {
           if (!requirements[bomItem.material_id]) {
@@ -203,18 +203,13 @@ function BOMPageContent() {
     if (!foundOrder) return;
     const { items, isPossible } = checkFeasibility(foundOrder);
 
-    if (!isPossible) {
-      toast({ title: "Insufficient Materials", description: "Cannot start production due to low raw material stock.", variant: "destructive" });
-      return;
-    }
+    if (!isPossible) return;
 
     // Create production runs for each item in the order
     foundOrder.items.forEach(item => {
-      // Find the specific materials for THIS item's product
-      // We can simplify by just using the product's recipe or BOM
       const bom = boms.find(b => b.product_id === item.productId || b.product_name === item.productName);
       let materialsUsed: any[] = [];
-      
+
       if (bom) {
         materialsUsed = bom.items.map(bi => ({
           materialId: bi.material_id,
@@ -244,15 +239,15 @@ function BOMPageContent() {
         productId: item.productId,
         productName: item.productName,
         quantity: item.quantity,
-        status: "Pending",
+        status: "In Progress",
         startDate: new Date().toISOString().split("T")[0],
         materialsUsed
       };
       addProductionRun(newRun);
     });
 
-    // Update order status to Processing
-    updateOrderStatus(foundOrder.id, "Processing");
+    // Update order status to In Progress
+    updateOrderStatus(foundOrder.id, "In Progress");
 
     // Deduct raw materials from stock
     items.forEach(req => {
@@ -265,7 +260,7 @@ function BOMPageContent() {
       }
     });
 
-    toast({ title: "Production Started", description: `Production runs created for Order ${foundOrder.orderNumber}` });
+    toast({ title: "Production Started", description: `Production runs initiated for Order ${foundOrder.orderNumber}` });
     setIsProductionDialogOpen(false);
     setFoundOrder(null);
     setOrderSearchId("");
@@ -289,7 +284,7 @@ function BOMPageContent() {
         breadcrumbs={[{ title: "Operations" }, { title: "Production" }]}
       />
 
-      <main className="flex-1 space-y-6 p-4 md:p-8">
+      <main className="flex-1 p-3 space-y-3">
         {/* Title + Action */}
         <div className="page-section-header animate-in-slide-up">
           <div>
@@ -413,7 +408,7 @@ function BOMPageContent() {
                             )}
                             <div>
                               <p className="text-sm font-bold text-slate-900">
-                                {checkFeasibility(foundOrder).isPossible ? "Production Ready" : "Production Blocked"}
+                                {checkFeasibility(foundOrder).isPossible ? "Production Ready" : "Required Raw Material not available"}
                               </p>
                               <p className="text-xs text-slate-500 font-medium">
                                 {checkFeasibility(foundOrder).isPossible ? "All materials are in stock for this order." : "Please restock required materials before starting."}
@@ -551,7 +546,7 @@ function BOMPageContent() {
                           <div className="space-y-0.5">
                             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Estimated Unit Cost</p>
                             <p className="text-3xl font-black text-slate-900 tracking-tighter">
-                              ₹{bomItems.reduce((sum, bi) => {
+                              INR {bomItems.reduce((sum, bi) => {
                                 const mat = materials.find((m) => m.material_id === bi.materialId);
                                 return sum + (Number(bi.quantity) || 0) * (mat?.cost_per_unit || 0);
                               }, 0).toFixed(2)}
@@ -571,7 +566,7 @@ function BOMPageContent() {
         </div>
 
         {/* KPI Cards */}
-        <div className="grid gap-4 md:grid-cols-3 animate-in-slide-up [animation-delay:50ms]">
+        <div className="grid gap-3 md:grid-cols-3 animate-in-slide-up [animation-delay:50ms]">
           <div className="stat-card">
             <div className="stat-icon bg-blue-50">
               {activeTab === "runs" ? <Factory className="h-5 w-5 text-primary" /> : <Layers className="h-5 w-5 text-primary" />}
@@ -593,9 +588,9 @@ function BOMPageContent() {
               {activeTab === "runs" ? <ClipboardList className="h-5 w-5 text-amber-500" /> : <FileText className="h-5 w-5 text-amber-500" />}
             </div>
             <div>
-              <p className="stat-label">{activeTab === "runs" ? "Pending Runs" : "Avg. Cost"}</p>
+              <p className="stat-label">{activeTab === "runs" ? "Cancelled Runs" : "Avg. Cost"}</p>
               <p className="stat-value text-xl">
-                {activeTab === "runs" ? productionRuns.filter(r => r.status === "Pending").length : `₹${totalCostAvg.toFixed(2)}`}
+                {activeTab === "runs" ? productionRuns.filter(r => r.status === "Cancelled").length : `INR ${totalCostAvg.toFixed(2)}`}
               </p>
             </div>
           </div>
@@ -614,8 +609,8 @@ function BOMPageContent() {
               />
             </div>
             <div className="flex items-center gap-2">
-              {(activeTab === "runs" 
-                ? ["all", "pending", "in progress", "completed"] 
+              {(activeTab === "runs"
+                ? ["all", "in progress", "completed"]
                 : ["all", "active", "draft", "archived"]
               ).map((s) => (
                 <button
@@ -669,7 +664,6 @@ function BOMPageContent() {
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="Pending">Pending</SelectItem>
                             <SelectItem value="In Progress">In Progress</SelectItem>
                             <SelectItem value="Completed">Completed</SelectItem>
                             <SelectItem value="Cancelled">Cancelled</SelectItem>
@@ -720,7 +714,7 @@ function BOMPageContent() {
                       <TableCell className="text-slate-600 text-sm font-medium">
                         {bom.items.length} item{bom.items.length !== 1 ? "s" : ""}
                       </TableCell>
-                      <TableCell className="font-bold text-slate-900">₹{bom.total_cost.toFixed(2)}</TableCell>
+                      <TableCell className="font-bold text-slate-900">INR {bom.total_cost.toFixed(2)}</TableCell>
                       <TableCell className="text-slate-500 text-xs font-medium">{bom.last_updated}</TableCell>
                       <TableCell>
                         <Select value={bom.status} onValueChange={(v) => handleStatusChange(bom.id, v as BOM["status"])}>
@@ -776,7 +770,7 @@ function BOMPageContent() {
                   </div>
                   <div>
                     <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Total Cost/Unit</p>
-                    <p className="text-sm font-black text-slate-900 mt-1">₹{viewBom.total_cost.toFixed(2)}</p>
+                    <p className="text-sm font-black text-slate-900 mt-1">INR {viewBom.total_cost.toFixed(2)}</p>
                   </div>
                 </div>
 
@@ -796,7 +790,7 @@ function BOMPageContent() {
                           <TableCell className="pl-4 font-medium text-slate-900">{item.name}</TableCell>
                           <TableCell className="text-slate-600">{item.quantity}</TableCell>
                           <TableCell className="text-slate-500 capitalize">{item.unit}</TableCell>
-                          <TableCell className="text-right pr-4 font-bold text-slate-900">₹{item.cost.toFixed(2)}</TableCell>
+                          <TableCell className="text-right pr-4 font-bold text-slate-900">INR {item.cost.toFixed(2)}</TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
@@ -805,7 +799,7 @@ function BOMPageContent() {
 
                 <div className="flex justify-between items-center pt-2 px-2">
                   <span className="text-sm font-semibold text-slate-500">Grand Total</span>
-                  <span className="text-2xl font-black text-primary">₹{viewBom.total_cost.toFixed(2)}</span>
+                  <span className="text-2xl font-black text-primary">INR {viewBom.total_cost.toFixed(2)}</span>
                 </div>
               </div>
             )}

@@ -64,25 +64,9 @@ export function OrdersTable({ orders, onStatusChange, onPaymentChange, onDelete 
               </TableCell>
               <TableCell className="whitespace-nowrap text-slate-500 text-xs font-medium">{order.orderDate}</TableCell>
               <TableCell className="font-semibold text-slate-900">{order.customerName}</TableCell>
-              <TableCell className="font-bold text-slate-900">₹{order.totalAmount}</TableCell>
+              <TableCell className="font-bold text-slate-900">INR {order.totalAmount}</TableCell>
               <TableCell>
-                <div className="space-y-1">
-                  <Select
-                    value={order.orderStatus}
-                    onValueChange={(value) => onStatusChange(order.id, value as Order["orderStatus"])}
-                  >
-                    <SelectTrigger className="h-7 text-[11px] w-30">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Pending">Pending</SelectItem>
-                      <SelectItem value="Confirmed">Confirmed</SelectItem>
-                      <SelectItem value="Shipped">Shipped</SelectItem>
-                      <SelectItem value="Delivered">Delivered</SelectItem>
-                      <SelectItem value="Cancelled">Cancelled</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+                <StatusBadge status={order.orderStatus} />
               </TableCell>
               <TableCell className="text-center">
                 <div className="space-y-1 inline-flex flex-col items-center">

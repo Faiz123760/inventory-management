@@ -58,7 +58,7 @@ export default function SettingsPage() {
     <div className="flex flex-1 flex-col bg-background animate-in-fade">
       <PageHeader title="Settings" breadcrumbs={[{ title: "Administration" }, { title: "Settings" }]} />
 
-      <main className="flex-1 p-4 md:p-6 space-y-5 max-w-4xl">
+      <main className="flex-1 p-3 space-y-3 max-w-4xl">
         {/* ── Page Header ── */}
         <div className="page-section-header animate-in-slide-up">
           <div>
@@ -149,7 +149,7 @@ export default function SettingsPage() {
         </SectionCard>
 
         {/* ── 2-Col: Notifications + Security ── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 animate-in-slide-up [animation-delay:100ms]">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 animate-in-slide-up [animation-delay:100ms]">
           {/* Notifications */}
           <SectionCard icon={Bell} iconColor="bg-blue-50 text-blue-500" title="Notifications" description="Control when and how alerts are delivered.">
             <div className="divide-y divide-slate-100">

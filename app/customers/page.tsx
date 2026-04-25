@@ -69,7 +69,7 @@ export default function CustomersPage() {
     <div className="flex flex-1 flex-col bg-background animate-in-fade">
       <PageHeader title="Customers" breadcrumbs={[{ title: "Relationships" }, { title: "Customers" }]} />
 
-      <main className="flex-1 space-y-6 p-4 md:p-8">
+      <main className="flex-1 p-3 space-y-3">
         <div className="flex flex-wrap items-start justify-between gap-4 animate-in-slide-up">
           <div className="space-y-1">
             <h2 className="text-2xl font-bold tracking-tight text-slate-900">Customer Directory</h2>
@@ -154,7 +154,7 @@ export default function CustomersPage() {
         </div>
 
         {/* Stats */}
-        <div className="grid gap-4 md:grid-cols-3 animate-in-slide-up [animation-delay:50ms]">
+        <div className="grid gap-3 md:grid-cols-3 animate-in-slide-up [animation-delay:50ms]">
           <div className="bg-white border border-slate-200 rounded-xl p-4 flex items-center gap-4 shadow-sm">
             <div className="h-10 w-10 rounded-xl bg-blue-50 flex items-center justify-center"><Users className="h-5 w-5 text-primary" /></div>
             <div>
@@ -173,7 +173,7 @@ export default function CustomersPage() {
             <div className="h-10 w-10 rounded-xl bg-emerald-50 flex items-center justify-center"><TrendingUp className="h-5 w-5 text-emerald-500" /></div>
             <div>
               <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Lifetime Revenue</p>
-              <p className="text-2xl font-bold text-slate-900">₹{totalRevenue.toLocaleString()}</p>
+              <p className="text-2xl font-bold text-slate-900">INR {totalRevenue.toLocaleString()}</p>
             </div>
           </div>
         </div>
@@ -232,7 +232,7 @@ export default function CustomersPage() {
                     </div>
                   </TableCell>
                   <TableCell>
-                    <div className="font-bold text-slate-900">₹{customer.total_spent.toLocaleString()}</div>
+                    <div className="font-bold text-slate-900">INR {customer.total_spent.toLocaleString()}</div>
                   </TableCell>
                   <TableCell>
                     <Badge variant="outline" className={customer.status === "Active" ? "bg-emerald-50 text-emerald-700 border-emerald-100 font-bold text-[10px]" : "bg-slate-100 text-slate-600 border-slate-200 font-bold text-[10px]"}>

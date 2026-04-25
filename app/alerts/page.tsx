@@ -47,7 +47,7 @@ export default function AlertsPage() {
         breadcrumbs={[{ title: "Monitoring" }, { title: "Alerts" }]}
       />
 
-      <main className="flex-1 space-y-6 p-4 md:p-8">
+      <main className="flex-1 p-3 space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-4 animate-in-slide-up">
           <div>
             <h2 className="text-2xl font-bold tracking-tight text-slate-900">Notifications Center</h2>
@@ -60,7 +60,7 @@ export default function AlertsPage() {
           </div>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-3 animate-in-slide-up [animation-delay:100ms]">
+        <div className="grid gap-3 lg:grid-cols-3 animate-in-slide-up [animation-delay:100ms]">
           <div className="lg:col-span-2 space-y-4">
             <h3 className="font-bold text-slate-500 flex items-center gap-2 mb-4">
               <AlertTriangle className="h-4 w-4 text-primary" />

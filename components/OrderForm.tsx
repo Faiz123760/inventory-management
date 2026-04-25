@@ -211,10 +211,10 @@ export function OrderForm({ onSubmit, initialData }: OrderFormProps) {
         <div className="flex justify-between items-end px-4">
           <div className="space-y-0.5">
             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Total Payable</p>
-            <p className="text-3xl font-black text-slate-900 tracking-tighter">₹{totalAmount.toLocaleString()}</p>
+            <p className="text-3xl font-black text-slate-900 tracking-tighter">INR {totalAmount.toLocaleString()}</p>
           </div>
           <div className="text-right space-y-0.5 opacity-60">
-            <p className="text-[11px] font-medium text-slate-500">Includes GST (18%): ₹{tax.toLocaleString()}</p>
+            <p className="text-[11px] font-medium text-slate-500">Includes GST (18%): INR {tax.toLocaleString()}</p>
           </div>
         </div>
 

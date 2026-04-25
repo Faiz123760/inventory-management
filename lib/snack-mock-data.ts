@@ -89,7 +89,7 @@ export const snackMetrics = [
   { label: "Finished Products", value: "12,840 units", change: "+5% from last week", icon: "package" },
   { label: "Low Stock Alerts", value: "12 items", change: "4 critical items", icon: "alert" },
   { label: "Expiring Products", value: "8 batches", change: "Within next 7 days", icon: "clock" },
-  { label: "Daily Orders", value: "₹ 84,200", change: "+18% vs yesterday", icon: "trending-up" },
+  { label: "Daily Orders", value: "INR 84,200", change: "+18% vs yesterday", icon: "trending-up" },
 ];
 
 export const stockTrendsData = [
@@ -112,20 +112,52 @@ export const weeklyActivity = [
   { day: "Sun", value: 3200 },
 ];
 
+export const dailyPurchasesData = [
+  { date: "04-16", amount: 12500 },
+  { date: "04-17", amount: 8200 },
+  { date: "04-18", amount: 15400 },
+  { date: "04-19", amount: 9800 },
+  { date: "04-20", amount: 11200 },
+  { date: "04-21", amount: 14500 },
+  { date: "04-22", amount: 18200 },
+  { date: "04-23", amount: 16800 },
+  { date: "04-24", amount: 12400 },
+];
+
+export const dailyOrdersData = [
+  { date: "04-16", amount: 18500, orders: 12 },
+  { date: "04-17", amount: 14200, orders: 8 },
+  { date: "04-18", amount: 22400, orders: 15 },
+  { date: "04-19", amount: 16800, orders: 10 },
+  { date: "04-20", amount: 19200, orders: 14 },
+  { date: "04-21", amount: 25500, orders: 18 },
+  { date: "04-22", amount: 28200, orders: 22 },
+  { date: "04-23", amount: 26800, orders: 20 },
+  { date: "04-24", amount: 32400, orders: 25 },
+];
+
+export const topSkusData = [
+  { name: "Royal Dalmoth Mix", value: 450, color: "#3b82f6" },
+  { name: "Classic Salted Chips", value: 320, color: "#10b981" },
+  { name: "Spicy Masala Dalmoth", value: 280, color: "#f59e0b" },
+  { name: "Tomato Tango Chips", value: 210, color: "#ef4444" },
+  { name: "Peri Peri Chips", value: 150, color: "#8b5cf6" },
+];
+
 
 
 export const recentPurchases = [
-  { id: "P001", supplier: "Global Grains Ltd", item: "Corn Meal", quantity: "500 kg", cost: "₹ 25,000", status: "Delivered" },
-  { id: "P002", supplier: "Pure Oil Co", item: "Palm Oil", quantity: "200 L", cost: "₹ 18,000", status: "In Transit" },
-  { id: "P003", supplier: "Spice Masters", item: "Masala Mix", quantity: "50 kg", cost: "₹ 12,500", status: "Delivered" },
-  { id: "P004", supplier: "Agro Foods", item: "Potato", quantity: "1000 kg", cost: "₹ 20,000", status: "Processing" },
+  { id: "P001", supplier: "Global Grains Ltd", item: "Corn Meal", quantity: "500 kg", cost: "INR 25,000", status: "Delivered" },
+  { id: "P002", supplier: "Pure Oil Co", item: "Palm Oil", quantity: "200 L", cost: "INR 18,000", status: "In Transit" },
+  { id: "P003", supplier: "Spice Masters", item: "Masala Mix", quantity: "50 kg", cost: "INR 12,500", status: "Delivered" },
+  { id: "P004", supplier: "Agro Foods", item: "Potato", quantity: "1000 kg", cost: "INR 20,000", status: "Processing" },
 ];
 
 export const topSellingProducts = [
-  { name: "Bhujia Sev", orders: "1,200 units", revenue: "₹ 24,000", trend: "+12%" },
-  { name: "Potato Chips Classic Salted", orders: "950 units", revenue: "₹ 19,000", trend: "+8%" },
-  { name: "Dalmoth Chilli Chatka", orders: "800 units", revenue: "₹ 16,000", trend: "+5%" },
-  { name: "Banana Chips", orders: "600 units", revenue: "₹ 15,000", trend: "-2%" },
+  { name: "Bhujia Sev", orders: "1,200 units", revenue: "INR 24,000", trend: "+12%" },
+  { name: "Potato Chips Classic Salted", orders: "950 units", revenue: "INR 19,000", trend: "+8%" },
+  { name: "Dalmoth Chilli Chatka", orders: "800 units", revenue: "INR 16,000", trend: "+5%" },
+  { name: "Banana Chips", orders: "600 units", revenue: "INR 15,000", trend: "-2%" },
 ];
 
 export const lowStockItems = [
@@ -139,12 +171,12 @@ export const rawMaterials: RawMaterial[] = [
   { material_id: "RM001", name: "Corn Meal", current_stock: 1200, unit: "kg", cost_per_unit: 50 },
   { material_id: "RM002", name: "Palm Oil", current_stock: 45, unit: "litre", cost_per_unit: 90 },
   { material_id: "RM003", name: "Potato", current_stock: 800, unit: "kg", cost_per_unit: 20 },
-  { material_id: "RM004", name: "Masala Mix", current_stock: 12, unit: "kg", cost_per_unit: 250 },
+  { material_id: "RM004", name: "Masala Mix", current_stock: 0, unit: "kg", cost_per_unit: 250 },
   { material_id: "RM005", name: "Packaging Bags", current_stock: 500, unit: "pcs", cost_per_unit: 5 },
 ];
 
 export const snackProducts: Product[] = [
-  { 
+  {
     product_id: "PR001", name: "Royal Dalmoth Mix", category: "dalmoth", stock_quantity: 450, unit: "packets", selling_price: 120, sku: 12, status: "In Stock", image: "/products/kurkure.png",
     recipe: [
       { material_id: "RM001", quantity: 0.5 },
@@ -152,7 +184,7 @@ export const snackProducts: Product[] = [
       { material_id: "RM004", quantity: 0.01 },
     ]
   },
-  { 
+  {
     product_id: "PR002", name: "Classic Salted Chips", category: "chips", stock_quantity: 320, unit: "packets", selling_price: 25, sku: 24, status: "In Stock", image: "/products/chips.png",
     recipe: [
       { material_id: "RM003", quantity: 0.4 },
@@ -256,7 +288,7 @@ export interface Order {
   totalAmount: number;
   paymentStatus: 'Paid' | 'Unpaid' | 'Partial' | 'Pending';
   paymentMethod: 'UPI' | 'Cash' | 'Card' | 'Bank Transfer';
-  orderStatus: 'Pending' | 'Confirmed' | 'Shipped' | 'Delivered' | 'Cancelled' | 'Processing';
+  orderStatus: 'Pending' | 'Confirmed' | 'Shipped' | 'Delivered' | 'Cancelled' | 'In Progress';
   deliveryStatus: 'Pending' | 'In Transit' | 'Delivered' | 'Returned';
   createdAt: string;
 }
@@ -268,7 +300,7 @@ export interface ProductionRun {
   productId: string;
   productName: string;
   quantity: number;
-  status: 'Pending' | 'In Progress' | 'Completed' | 'Cancelled';
+  status: 'In Progress' | 'Completed' | 'Cancelled';
   startDate: string;
   endDate?: string;
   materialsUsed: Array<{
@@ -318,17 +350,17 @@ export const ordersHistory: Order[] = [
     customerPhone: "9999999999",
     items: [
       {
-        productId: "P1",
-        productName: "Masala Chips",
+        productId: "PR002",
+        productName: "Classic Salted Chips",
         quantity: 5,
-        unitPrice: 20,
-        totalPrice: 100,
+        unitPrice: 25,
+        totalPrice: 125,
       }
     ],
-    subtotal: 100,
-    tax: 18,
+    subtotal: 125,
+    tax: 22.5,
     discount: 0,
-    totalAmount: 118,
+    totalAmount: 147.5,
     paymentStatus: "Paid",
     paymentMethod: "UPI",
     orderStatus: "Delivered",
@@ -343,17 +375,17 @@ export const ordersHistory: Order[] = [
     customerPhone: "8888888888",
     items: [
       {
-        productId: "P2",
-        productName: "Bhujia Sev",
+        productId: "PR001",
+        productName: "Royal Dalmoth Mix",
         quantity: 10,
-        unitPrice: 20,
-        totalPrice: 200,
+        unitPrice: 120,
+        totalPrice: 1200,
       }
     ],
-    subtotal: 200,
-    tax: 36,
+    subtotal: 1200,
+    tax: 216,
     discount: 0,
-    totalAmount: 236,
+    totalAmount: 1416,
     paymentStatus: "Pending",
     paymentMethod: "Cash",
     orderStatus: "Pending",

@@ -109,7 +109,7 @@ export default function OrdersPage() {
         breadcrumbs={[{ title: "Finance" }, { title: "Orders" }]}
       />
 
-      <main className="flex-1 space-y-6 p-4 md:p-8">
+      <main className="flex-1 p-3 space-y-3">
         <div className="page-section-header animate-in-slide-up">
           <div>
             <h1 className="page-title">Order Management</h1>
@@ -158,9 +158,9 @@ export default function OrdersPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 animate-in-slide-up [animation-delay:50ms]">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 animate-in-slide-up [animation-delay:50ms]">
           <div className="stat-card"><div className="stat-icon bg-blue-50"><ShoppingBag className="h-5 w-5 text-primary" /></div><div><p className="stat-label">Total Orders</p><p className="stat-value">{orders.length}</p></div></div>
-          <div className="stat-card"><div className="stat-icon bg-emerald-50"><IndianRupee className="h-5 w-5 text-emerald-600" /></div><div><p className="stat-label">Revenue</p><p className="stat-value text-xl">₹{totalRevenue.toLocaleString()}</p></div></div>
+          <div className="stat-card"><div className="stat-icon bg-emerald-50"><IndianRupee className="h-5 w-5 text-emerald-600" /></div><div><p className="stat-label">Revenue</p><p className="stat-value text-xl">INR {totalRevenue.toLocaleString()}</p></div></div>
           <div className="stat-card"><div className="stat-icon bg-green-50"><CheckCircle2 className="h-5 w-5 text-green-600" /></div><div><p className="stat-label">Paid</p><p className="stat-value">{paidOrders}</p></div></div>
           <div className="stat-card"><div className="stat-icon bg-amber-50"><Clock className="h-5 w-5 text-amber-500" /></div><div><p className="stat-label">Pending</p><p className="stat-value">{pendingOrders}</p></div></div>
         </div>
@@ -177,7 +177,7 @@ export default function OrdersPage() {
               />
             </div>
             <div className="flex items-center gap-2">
-              {["all", "pending", "confirmed", "shipped", "delivered", "cancelled"].map((s) => (
+              {["all", "pending", "in progress", "delivered", "cancelled"].map((s) => (
                 <button
                   key={s}
                   onClick={() => setStatusFilter(s)}
