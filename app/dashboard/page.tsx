@@ -22,6 +22,8 @@ import {
   Area, AreaChart, Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis,
   PieChart, Pie, Cell, Line, LineChart
 } from "recharts";
+import { MaterialForm, type MaterialFormData } from "@/components/MaterialForm";
+import { ProductForm, PRODUCT_BLANK } from "@/components/ProductForm";
 import {
   dailyPurchasesData,
   dailyOrdersData,
@@ -39,8 +41,8 @@ export default function DashboardPage() {
 
   const [isProductDialogOpen, setIsProductDialogOpen] = useState(false);
   const [isMaterialDialogOpen, setIsMaterialDialogOpen] = useState(false);
-  const [productForm, setProductForm] = useState({ id: "", name: "", category: "dalmoth", unit: "packets", price: "", sku: "" });
-  const [materialForm, setMaterialForm] = useState({ id: "", name: "", unit: "kg", stock: "", cost: "" });
+  const [productForm, setProductForm] = useState(PRODUCT_BLANK);
+  const [materialForm, setMaterialForm] = useState<MaterialFormData>({ id: "", name: "", unit: "kg", stock: "", cost: "" });
   const [productMaterials, setProductMaterials] = useState<Array<{ materialId: string; quantity: string }>>([
     { materialId: "", quantity: "" },
   ]);
@@ -79,7 +81,7 @@ export default function DashboardPage() {
     };
     addProduct(p);
     setIsProductDialogOpen(false);
-    setProductForm({ id: "", name: "", category: "dalmoth", unit: "packets", price: "", sku: "" });
+    setProductForm(PRODUCT_BLANK);
     setProductMaterials([{ materialId: "", quantity: "" }]);
     toast({ title: "Product added", description: `${p.name} has been registered.` });
   };
@@ -172,17 +174,19 @@ export default function DashboardPage() {
                   <Plus className="h-3 w-3 text-violet-500" /> Add Material
                 </Button>
               </DialogTrigger>
-              <DialogContent className="max-w-xl bg-white p-0 overflow-hidden border-none shadow-2xl rounded-lg">
-                <DialogHeader className="px-5 py-4 bg-slate-50/50 border-b border-slate-100">
-                  <DialogTitle className="text-base font-black uppercase tracking-wider text-slate-900">Add Raw Material</DialogTitle>
+              <DialogContent className="max-w-xl bg-white border-none rounded-md shadow-2xl p-0">
+                <DialogHeader className="px-5 pt-5 pb-3 border-b border-slate-50 bg-slate-50/30">
+                  <DialogTitle className="text-lg font-black tracking-tight text-slate-900 uppercase tracking-wider">Add Raw Material</DialogTitle>
+                  <DialogDescription className="text-slate-500 font-medium text-[12px]">Register a new material to the inventory.</DialogDescription>
                 </DialogHeader>
-                <form onSubmit={handleAddMaterial} className="p-5 space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-1"><Label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Material ID</Label><Input required value={materialForm.id} onChange={e => setMaterialForm({ ...materialForm, id: e.target.value })} className="h-9 bg-slate-50 border-slate-200 rounded" /></div>
-                    <div className="space-y-1"><Label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Name</Label><Input required value={materialForm.name} onChange={e => setMaterialForm({ ...materialForm, name: e.target.value })} className="h-9 bg-slate-50 border-slate-200 rounded" /></div>
-                  </div>
-                  <Button type="submit" className="w-full h-10 bg-primary font-black uppercase tracking-widest text-[11px] shadow-lg rounded">Save Material</Button>
-                </form>
+                <div className="no-scrollbar max-h-[85vh] overflow-y-auto px-5 py-5">
+                  <MaterialForm
+                    formData={materialForm}
+                    setFormData={setMaterialForm}
+                    onSubmit={handleAddMaterial}
+                    label="Save Material"
+                  />
+                </div>
               </DialogContent>
             </Dialog>
 
@@ -192,17 +196,24 @@ export default function DashboardPage() {
                   <Plus className="h-3 w-3" /> Add Product
                 </Button>
               </DialogTrigger>
-              <DialogContent className="max-w-2xl bg-white p-0 overflow-hidden border-none shadow-2xl rounded-lg">
-                <DialogHeader className="px-5 py-4 bg-slate-50/50 border-b border-slate-100">
-                  <DialogTitle className="text-base font-black uppercase tracking-wider text-slate-900">Add New Product</DialogTitle>
+              <DialogContent className="max-w-2xl bg-white border-none rounded-md shadow-2xl p-0">
+                <DialogHeader className="px-5 pt-5 pb-3 border-b border-slate-50 bg-slate-50/30">
+                  <DialogTitle className="text-lg font-black tracking-tight text-slate-900 uppercase tracking-wider">Add New Product</DialogTitle>
+                  <DialogDescription className="text-slate-500 font-medium text-[12px]">Configure product details and resource requirements.</DialogDescription>
                 </DialogHeader>
-                <form onSubmit={handleAddProduct} className="p-5 space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-1"><Label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Product ID</Label><Input required value={productForm.id} onChange={e => setProductForm({ ...productForm, id: e.target.value })} className="h-9 bg-slate-50 border-slate-200 rounded" /></div>
-                    <div className="space-y-1"><Label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Product Name</Label><Input required value={productForm.name} onChange={e => setProductForm({ ...productForm, name: e.target.value })} className="h-9 bg-slate-50 border-slate-200 rounded" /></div>
-                  </div>
-                  <Button type="submit" className="w-full h-10 bg-primary font-black uppercase tracking-widest text-[11px] shadow-lg rounded">Register Product</Button>
-                </form>
+                <div className="no-scrollbar max-h-[85vh] overflow-y-auto px-5 py-5">
+                  <ProductForm
+                    onSubmit={handleAddProduct}
+                    label="Register Product"
+                    formData={productForm}
+                    setFormData={setProductForm}
+                    productMaterials={productMaterials}
+                    updateProductMaterialRow={updateProductMaterialRow}
+                    addProductMaterialRow={addProductMaterialRow}
+                    removeProductMaterialRow={removeProductMaterialRow}
+                    materials={state.materials}
+                  />
+                </div>
               </DialogContent>
             </Dialog>
           </div>
