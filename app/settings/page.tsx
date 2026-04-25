@@ -67,12 +67,12 @@ export default function SettingsPage() {
     <div className="flex flex-1 flex-col bg-background animate-in-fade">
       <PageHeader title="Settings" breadcrumbs={[{ title: "Administration" }, { title: "Settings" }]} />
 
-      <main className="flex-1 p-4 space-y-4 max-w-[1200px] mx-auto w-full">
+      <main className="flex-1 p-3 space-y-3 max-w-[1800px] mx-auto w-full">
         {/* ── Page Header ── */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-2">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-1">
           <div>
-            <h1 className="text-[22px] font-black text-slate-900 tracking-tight">System Settings</h1>
-            <p className="text-[12px] text-slate-400 font-bold uppercase tracking-widest mt-1">Manage your workspace and personal preferences</p>
+            <h1 className="text-[18px] font-black text-slate-900 tracking-tight">System Settings</h1>
+            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Manage your workspace and personal preferences</p>
           </div>
           <Button
             onClick={handleSave}

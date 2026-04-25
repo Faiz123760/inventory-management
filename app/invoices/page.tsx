@@ -5,22 +5,22 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { 
-  Search, FileText, Download, Printer, MoreVertical, 
+import {
+  Search, FileText, Download, Printer, MoreVertical,
   ExternalLink, CheckCircle2, Clock, AlertCircle, Filter
 } from "lucide-react";
 import { useAppStore } from "@/lib/store";
 import { useState } from "react";
-import { 
-  DropdownMenu, DropdownMenuContent, DropdownMenuItem, 
-  DropdownMenuTrigger 
+import {
+  DropdownMenu, DropdownMenuContent, DropdownMenuItem,
+  DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 
 export default function InvoicesPage() {
   const { state } = useAppStore();
   const [search, setSearch] = useState("");
 
-  const filteredInvoices = state.orders.filter(order => 
+  const filteredInvoices = state.orders.filter(order =>
     order.orderNumber.toLowerCase().includes(search.toLowerCase()) ||
     order.customerName.toLowerCase().includes(search.toLowerCase())
   );
@@ -30,19 +30,17 @@ export default function InvoicesPage() {
       <PageHeader title="Invoices" breadcrumbs={[{ title: "Home" }, { title: "Invoices" }]} />
 
       <main className="flex-1 p-3 space-y-3">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-4">
-          <div className="space-y-1">
-            <h1 className="text-3xl font-black text-slate-900 tracking-tight">Billing & Invoices</h1>
-            <p className="text-sm text-slate-500 font-medium leading-relaxed">
-              Manage and track all customer billing records and payment statuses.
-            </p>
+        <div className="page-section-header animate-in-slide-up">
+          <div>
+            <h1 className="page-title">Billing & Invoices</h1>
+            <p className="page-subtitle">Manage and track all customer billing records and payment statuses.</p>
           </div>
           <div className="flex items-center gap-2">
             <Button variant="outline" className="gap-2 h-10 font-bold border-slate-200">
-              <Download className="h-4 w-4" /> Export All
+              <Download className="h-4 w-4" /> EXPORT ALL
             </Button>
             <Button className="gap-2 h-10 font-bold shadow-lg shadow-primary/20">
-              <FileText className="h-4 w-4" /> New Invoice
+              <FileText className="h-4 w-4" /> NEW INVOICE
             </Button>
           </div>
         </div>
@@ -89,8 +87,8 @@ export default function InvoicesPage() {
               <div className="flex items-center gap-2">
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-                  <Input 
-                    placeholder="Search invoice or customer..." 
+                  <Input
+                    placeholder="Search invoice or customer..."
                     className="pl-9 w-full md:w-64 h-10 bg-white border-slate-200 rounded-md focus:ring-2 focus:ring-blue-500/20 transition-all"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
@@ -181,16 +179,16 @@ export default function InvoicesPage() {
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end" className="w-48 p-1.5 border-slate-100 shadow-2xl rounded-lg">
                               <DropdownMenuItem className="gap-2.5 py-2 cursor-pointer focus:bg-blue-50 focus:text-blue-600 rounded-md">
-                                <ExternalLink className="h-4 w-4 opacity-70" /> 
+                                <ExternalLink className="h-4 w-4 opacity-70" />
                                 <span className="font-semibold text-xs">View Details</span>
                               </DropdownMenuItem>
                               <DropdownMenuItem className="gap-2.5 py-2 cursor-pointer focus:bg-blue-50 focus:text-blue-600 rounded-md">
-                                <FileText className="h-4 w-4 opacity-70" /> 
+                                <FileText className="h-4 w-4 opacity-70" />
                                 <span className="font-semibold text-xs">Send Email</span>
                               </DropdownMenuItem>
                               <div className="h-px bg-slate-50 my-1" />
                               <DropdownMenuItem className="gap-2.5 py-2 cursor-pointer text-rose-500 focus:bg-rose-50 focus:text-rose-600 rounded-md">
-                                <AlertCircle className="h-4 w-4 opacity-70" /> 
+                                <AlertCircle className="h-4 w-4 opacity-70" />
                                 <span className="font-semibold text-xs">Cancel Invoice</span>
                               </DropdownMenuItem>
                             </DropdownMenuContent>

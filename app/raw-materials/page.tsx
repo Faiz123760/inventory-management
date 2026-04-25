@@ -78,8 +78,8 @@ export default function RawMaterialsPage() {
     toast({ title: "Material removed", description: `${name} deleted from inventory.` });
   };
 
-  const totalValue   = materials.reduce((s, m) => s + m.current_stock * m.cost_per_unit, 0);
-  const lowCount     = materials.filter((m) => m.current_stock < 50).length;
+  const totalValue = materials.reduce((s, m) => s + m.current_stock * m.cost_per_unit, 0);
+  const lowCount = materials.filter((m) => m.current_stock < 50).length;
 
   return (
     <div className="flex flex-1 flex-col bg-background animate-in-fade">
@@ -91,12 +91,12 @@ export default function RawMaterialsPage() {
           <div><h1 className="page-title">Raw Materials</h1><p className="page-subtitle">Manage ingredient inventory, costs, and stock levels.</p></div>
           <div className="flex items-center gap-2">
             <Button variant="outline" size="sm" className="h-9 gap-1.5 border-slate-200 text-slate-600 hover:bg-slate-50 rounded-md hidden md:flex">
-              <Download className="h-3.5 w-3.5 text-primary" /> Export
+              <Download className="h-3.5 w-3.5 text-primary" /> EXPORT
             </Button>
             <Dialog open={isAddOpen} onOpenChange={(o) => { setIsAddOpen(o); if (!o) resetForm(); }}>
               <DialogTrigger asChild>
                 <Button size="sm" className="h-9 gap-1.5 bg-primary hover:bg-primary/90 text-white font-medium rounded-md shadow-sm shadow-primary/20">
-                  <Plus className="h-3.5 w-3.5" /> Add Material
+                  <Plus className="h-3.5 w-3.5" /> ADD MATERIAL
                 </Button>
               </DialogTrigger>
               <DialogContent className="max-w-2xl bg-white border-none rounded-md shadow-2xl p-0 overflow-hidden">

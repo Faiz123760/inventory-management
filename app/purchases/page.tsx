@@ -98,7 +98,7 @@ export default function PurchasesPage() {
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
               <Button className="bg-primary hover:bg-primary/90 text-white shadow-sm rounded-md h-10 px-5 font-semibold gap-2">
-                <Plus className="h-4 w-4" /> New Purchase
+                <Plus className="h-4 w-4" /> NEW PURCHASE
               </Button>
             </DialogTrigger>
             <DialogContent className="max-w-2xl bg-white border-none rounded-md shadow-2xl p-0 overflow-hidden">
@@ -236,7 +236,7 @@ export default function PurchasesPage() {
                   className={`px-3 py-1.5 rounded-full text-[11px] font-bold border transition-all capitalize ${statusFilter === s
                     ? "bg-primary text-white border-primary"
                     : "bg-white text-slate-500 border-slate-200 hover:border-slate-300"
-                  }`}
+                    }`}
                 >
                   {s === "all" ? "All" : s === "in-transit" ? "In Transit" : s}
                 </button>

@@ -67,15 +67,15 @@ export default function SuppliersPage() {
       <PageHeader title="Suppliers" breadcrumbs={[{ title: "Relationships" }, { title: "Suppliers" }]} />
 
       <main className="flex-1 p-3 space-y-3">
-        <div className="flex flex-wrap items-start justify-between gap-4 animate-in-slide-up">
-          <div className="space-y-1">
-            <h2 className="text-2xl font-bold tracking-tight text-slate-900">Supplier Directory</h2>
-            <p className="text-slate-500 text-sm">Manage raw material providers and logistics partners.</p>
+        <div className="page-section-header animate-in-slide-up">
+          <div>
+            <h1 className="page-title">Supplier Directory</h1>
+            <p className="page-subtitle">Manage raw material providers and logistics partners.</p>
           </div>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
               <Button className="bg-primary hover:bg-primary/90 text-white shadow-sm rounded-md h-10 px-5 font-semibold gap-2">
-                <Plus className="h-4 w-4" /> Add Supplier
+                <Plus className="h-4 w-4" /> ADD SUPPLIER
               </Button>
             </DialogTrigger>
             <DialogContent className="max-w-2xl bg-white border-none rounded-md shadow-2xl p-0 overflow-hidden">

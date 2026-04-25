@@ -122,7 +122,7 @@ export default function OrdersPage() {
               className="bg-white border-slate-200 text-slate-600 h-10 font-semibold rounded-lg hover:bg-slate-50"
               onClick={() => router.push("/production")}
             >
-              <Factory className="mr-2 h-4 w-4 text-primary" /> Production
+              <Factory className="mr-2 h-4 w-4 text-primary" /> PRODUCTION
             </Button>
 
             <Button
@@ -131,13 +131,13 @@ export default function OrdersPage() {
               className="bg-white border-slate-200 text-slate-600 h-10 font-semibold rounded-lg hover:bg-slate-50"
               onClick={handleExport}
             >
-              <Download className="mr-2 h-4 w-4 text-primary" /> Export
+              <Download className="mr-2 h-4 w-4 text-primary" /> EXPORT
             </Button>
 
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
               <DialogTrigger asChild>
                 <Button className="bg-primary hover:bg-primary/90 text-white shadow-sm rounded-md h-10 px-5 font-semibold gap-2">
-                  <Plus className="h-4 w-4" /> New Order
+                  <Plus className="h-4 w-4" /> NEW ORDER
                 </Button>
               </DialogTrigger>
               <DialogContent className="max-w-5xl bg-white border-none rounded-md shadow-2xl p-0 overflow-hidden">
@@ -149,7 +149,7 @@ export default function OrdersPage() {
                     </DialogDescription>
                   </div>
                 </DialogHeader>
-                
+
                 <div className="no-scrollbar max-h-[70vh] overflow-y-auto px-5 py-3">
                   <OrderForm onSubmit={handleCreateOrder} />
                 </div>

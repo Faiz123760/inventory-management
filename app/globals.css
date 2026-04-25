@@ -256,8 +256,8 @@
 
   /* ─── KPI Stat Cards ─── */
   .stat-card {
-    @apply bg-white border border-slate-200 rounded-md p-3 flex items-center gap-3 transition-all duration-200;
-    box-shadow: var(--shadow-xs);
+    @apply bg-white border border-slate-200 rounded p-3.5 flex flex-col justify-between h-[100px] hover:-translate-y-0.5 transition-all duration-300;
+    box-shadow: var(--shadow-sm);
   }
 
   .stat-card:hover {
@@ -271,11 +271,11 @@
   }
 
   .stat-value {
-    @apply text-[24px] font-extrabold tracking-tight text-slate-900;
+    @apply text-[18px] font-black tracking-tight text-slate-900 leading-none;
   }
 
   .stat-label {
-    @apply text-[11px] font-semibold uppercase tracking-widest text-slate-400 mb-0.5;
+    @apply text-[9px] font-black uppercase tracking-[0.15em] text-slate-400 mb-0.5;
   }
 
   .stat-change-up {
@@ -292,11 +292,11 @@
   }
 
   .page-title {
-    @apply text-[20px] font-bold tracking-tight text-slate-900 leading-tight;
+    @apply text-[18px] font-black tracking-tight text-slate-900 leading-tight;
   }
 
   .page-subtitle {
-    @apply text-sm text-slate-500 mt-1 leading-relaxed;
+    @apply text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1;
   }
 
   /* ─── Table ─── */

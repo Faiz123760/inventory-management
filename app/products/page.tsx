@@ -22,9 +22,9 @@ import { useToast } from "@/components/ui/use-toast";
 import { useAppStore } from "@/lib/store";
 
 function StockBadge({ qty }: { qty: number }) {
-  if (qty === 0)   return <span className="badge badge-error">Out of Stock</span>;
-  if (qty <= 20)   return <span className="badge badge-warning">Low Stock</span>;
-  return             <span className="badge badge-success">In Stock</span>;
+  if (qty === 0) return <span className="badge badge-error">Out of Stock</span>;
+  if (qty <= 20) return <span className="badge badge-warning">Low Stock</span>;
+  return <span className="badge badge-success">In Stock</span>;
 }
 
 function CategoryPill({ cat }: { cat: string }) {
@@ -38,12 +38,12 @@ export default function ProductsPage() {
   const { state, addProduct, updateProduct, deleteProduct } = useAppStore();
   const products = state.products;
 
-  const [searchTerm, setSearchTerm]     = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const [activeCategory, setActiveCategory] = useState("all");
-  const [isAddOpen, setIsAddOpen]       = useState(false);
-  const [viewRecipe, setViewRecipe]     = useState<Product | null>(null);
-  const [editTarget, setEditTarget]     = useState<Product | null>(null);
-  const [formData, setFormData]         = useState(BLANK);
+  const [isAddOpen, setIsAddOpen] = useState(false);
+  const [viewRecipe, setViewRecipe] = useState<Product | null>(null);
+  const [editTarget, setEditTarget] = useState<Product | null>(null);
+  const [formData, setFormData] = useState(BLANK);
   const [productMaterials, setProductMaterials] = useState<Array<{ materialId: string; quantity: string }>>([
     { materialId: "", quantity: "" },
   ]);
@@ -130,7 +130,7 @@ export default function ProductsPage() {
     toast({ title: "Product removed", description: `${name} deleted.` });
   };
 
-  const totalValue    = products.reduce((s, p) => s + p.selling_price * p.stock_quantity, 0);
+  const totalValue = products.reduce((s, p) => s + p.selling_price * p.stock_quantity, 0);
   const lowStockCount = products.filter((p) => p.stock_quantity <= 20).length;
 
 
@@ -145,7 +145,7 @@ export default function ProductsPage() {
           <Dialog open={isAddOpen} onOpenChange={(o) => { setIsAddOpen(o); if (!o) resetForm(); }}>
             <DialogTrigger asChild>
               <Button size="sm" className="h-9 gap-1.5 bg-primary hover:bg-primary/90 text-white font-medium rounded-md shadow-sm shadow-primary/20">
-                <Plus className="h-3.5 w-3.5" /> Add Product
+                <Plus className="h-3.5 w-3.5" /> ADD PRODUCT
               </Button>
             </DialogTrigger>
             <DialogContent className="max-w-2xl bg-white border-none rounded-md shadow-2xl p-0 overflow-hidden">
@@ -183,15 +183,23 @@ export default function ProductsPage() {
           <div className="surface-header py-3 flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-2">
               {["all", "dalmoth", "chips"].map((cat) => (
-                <button key={cat} onClick={() => setActiveCategory(cat)}
-                  className={`px-3 py-1.5 rounded-full text-[12px] font-semibold border transition-all ${activeCategory === cat ? "bg-primary text-white border-primary shadow-sm shadow-primary/20" : "bg-white text-slate-500 border-slate-200 hover:border-slate-300 hover:text-slate-700"}`}>
+                <button
+                  key={cat}
+                  onClick={() => setActiveCategory(cat)}
+                  className={`px-3 py-1.5 rounded-full text-[12px] font-semibold border transition-all ${activeCategory === cat ? "bg-primary text-white border-primary shadow-sm shadow-primary/20" : "bg-white text-slate-500 border-slate-200 hover:border-slate-300 hover:text-slate-700"}`}
+                >
                   {cat === "all" ? "All Products" : cat.charAt(0).toUpperCase() + cat.slice(1)}
                 </button>
               ))}
             </div>
             <div className="relative w-full max-w-xs">
               <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400 pointer-events-none" />
-              <Input placeholder="Search products…" className="h-8 pl-8 bg-white border-slate-200 text-slate-900 text-[13px] rounded-md" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+              <Input
+                placeholder="Search products…"
+                className="h-8 pl-8 bg-white border-slate-200 text-slate-900 text-[13px] rounded-md"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
             </div>
           </div>
 
@@ -226,7 +234,7 @@ export default function ProductsPage() {
                       <TableCell className="td text-center text-slate-500 text-[13px]">{product.unit}</TableCell>
                       <TableCell className="td">
                         {product.recipe && product.recipe.length > 0 ? (
-                          <button 
+                          <button
                             onClick={() => setViewRecipe(product)}
                             className="flex items-center gap-1.5 text-[12px] font-medium text-slate-600 bg-slate-100 px-2.5 py-1 rounded-full w-fit hover:bg-primary/10 hover:text-primary transition-all group"
                           >
@@ -271,18 +279,18 @@ export default function ProductsPage() {
               <DialogDescription className="text-slate-500 font-medium text-[13px]">Update product information and pricing.</DialogDescription>
             </DialogHeader>
             <div className="-mx-1 no-scrollbar max-h-[75vh] overflow-y-auto px-8 py-6">
-                <ProductForm
-                  onSubmit={handleEdit}
-                  label="Update Product"
-                  formData={formData}
-                  setFormData={setFormData}
-                  productMaterials={productMaterials}
-                  updateProductMaterialRow={updateProductMaterialRow}
-                  addProductMaterialRow={addProductMaterialRow}
-                  removeProductMaterialRow={removeProductMaterialRow}
-                  materials={state.materials}
-                  isEdit={true}
-                />
+              <ProductForm
+                onSubmit={handleEdit}
+                label="Update Product"
+                formData={formData}
+                setFormData={setFormData}
+                productMaterials={productMaterials}
+                updateProductMaterialRow={updateProductMaterialRow}
+                addProductMaterialRow={addProductMaterialRow}
+                removeProductMaterialRow={removeProductMaterialRow}
+                materials={state.materials}
+                isEdit={true}
+              />
             </div>
           </DialogContent>
         </Dialog>
